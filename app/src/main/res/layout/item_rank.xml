@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="云音乐排行榜" />
+
+    <TextView
+        android:id="@+id/tv_top_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tv_top_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_top_1"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tv_top_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_top_2"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="" />
+</RelativeLayout>

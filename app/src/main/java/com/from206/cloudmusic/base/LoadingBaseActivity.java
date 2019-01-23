@@ -1,10 +1,13 @@
 package com.from206.cloudmusic.base;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.from206.cloudmusic.http.Stateful;
-import com.from206.cloudmusic.utils.ErrorCodes;
+import com.from206.cloudmusic.module.login.view.LoginActivity;
+import com.from206.cloudmusic.utils.HttpCode;
 
 import javax.inject.Inject;
 
@@ -42,20 +45,23 @@ public abstract class LoadingBaseActivity<T extends BasePresenter> extends BaseA
     /**
      * handle the common error
      *
-     * @param state
+     * @param code
      */
-    public void handleState(String state, String msg) {
+    public void handleState(int code, String msg) {
 //        dismissLoadingDialog();
-        switch (state) {
-            case ErrorCodes.NET_BREAK_OFF://网络断开
+        switch (code) {
+            case HttpCode.SYSTEM_ERROR://网络断开
 
                 break;
-            case ErrorCodes.COMMON_HTTP_ERROR://网络访问错误
+            case HttpCode.COMMON_HTTP_ERROR://网络访问错误
 
                 break;
                 //会话失效,请重新登录
-            case ErrorCodes.NEED_LOGIN:
-
+            case HttpCode.NEED_LOGIN:
+                startActivity(new Intent(mContext,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case HttpCode.PARAM_ERROR:
+                ToastUtils.showShort("参数错误");
                 break;
 
             default:

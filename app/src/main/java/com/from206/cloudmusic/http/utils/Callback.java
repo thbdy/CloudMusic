@@ -4,8 +4,8 @@ package com.from206.cloudmusic.http.utils;
 import android.util.Log;
 
 import com.from206.cloudmusic.http.Stateful;
-import com.from206.cloudmusic.utils.ErrorCodes;
 
+import retrofit2.HttpException;
 import rx.Subscriber;
 
 
@@ -30,8 +30,11 @@ public class Callback<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        Log.e(TAG, "onError: " +e.getMessage());
-        onFailed();
+        Log.e(TAG, "onError: "+e.getMessage() );
+        if(e instanceof HttpException){
+            HttpException httpException = (HttpException) e;
+            onFailed(httpException.code(),httpException.message());
+        }
     }
 
 
@@ -47,7 +50,7 @@ public class Callback<T> extends Subscriber<T> {
 
 
     }
-    public void onFailed() {
-        target.setState(ErrorCodes.COMMON_HTTP_ERROR,"");
+    public void onFailed(int code,String msg) {
+        target.setState(code,msg);
     }
 }

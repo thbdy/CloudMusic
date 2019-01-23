@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="70dp">
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_margin="10dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:textSize="16sp"
+        android:textColor="@color/color666666"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="我的听歌排行"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="@color/color999999"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_desc"
+        android:layout_marginBottom="10dp"
+        android:textSize="13sp"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:text="共1首，播放11次"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

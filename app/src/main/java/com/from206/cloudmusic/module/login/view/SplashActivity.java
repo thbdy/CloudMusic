@@ -1,9 +1,18 @@
 package com.from206.cloudmusic.module.login.view;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.WindowManager;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.from206.cloudmusic.R;
 import com.from206.cloudmusic.base.BaseActivity;
+import com.from206.cloudmusic.module.main.view.MainActivity;
+
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Observer;
 
 /**
  * Created by 75232 on 2019/1/18
@@ -20,6 +29,26 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        Observable.timer(2, TimeUnit.SECONDS).subscribe(new Observer<Long>() {
+            @Override
+            public void onCompleted() {
+                String str = SPUtils.getInstance().getString("personInfo");
+                if(!TextUtils.isEmpty(str)){
+                    finish();
+                    startActivity(new Intent(mContext,MainActivity.class));
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+
+            }
+        });
 
     }
 

@@ -92,7 +92,7 @@ public abstract class LoadingBaseFragment<P extends BasePresenter> extends Fragm
         }
     }
 
-    public void handleState(String state, String msg) {
+    public void handleState(int state, String msg) {
 
     }
 

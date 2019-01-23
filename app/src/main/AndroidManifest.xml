@@ -38,12 +38,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--登录页面-->
+        <!--登录主页面-->
+        <activity android:name=".module.login.view.LoginMainActivity">
+
+        </activity>
+        <!--手机号登录页面-->
         <activity android:name=".module.login.view.LoginActivity">
 
         </activity>
         <!--启动页面-->
         <activity android:name=".module.login.view.SplashActivity">
+
+        </activity>
+        <!--排行榜-->
+        <activity android:name=".module.main.view.RankActivity">
+
+        </activity>
+        <!--私人FM-->
+        <activity android:name=".module.main.view.PersonalFmActivity">
+
+        </activity>
+
+        <!--个人主页-->
+        <activity android:name=".module.user.view.PersonInfoActivity">
 
         </activity>
     </application>

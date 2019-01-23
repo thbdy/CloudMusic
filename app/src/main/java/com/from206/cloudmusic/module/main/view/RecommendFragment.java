@@ -1,5 +1,6 @@
 package com.from206.cloudmusic.module.main.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,10 +38,11 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
     Unbinder unbinder;
     private List<String> bannerImageList = new ArrayList<>();
 
+
     @Override
     protected void fetchData() {
-        //请求轮播图数据
-        mPresenter.fetchBanner();
+//        //请求轮播图数据
+//        mPresenter.fetchBanner();
 
     }
 
@@ -60,7 +62,7 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
     }
 
     @Override
-    public void setState(String state, String msg) {
+    public void setState(int state, String msg) {
 
     }
 
@@ -94,11 +96,16 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
         unbinder.unbind();
     }
 
-    @OnClick({R.id.banner})
+    @OnClick({R.id.ll_rank,R.id.ll_personal_fm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //排行榜
             case R.id.ll_rank:
+                startActivity(new Intent(mContext,RankActivity.class));
+                break;
+            //私人FM
+            case R.id.ll_personal_fm:
+                startActivity(new Intent(mContext,PersonalFmActivity.class));
                 break;
         }
     }

@@ -3,7 +3,7 @@ package com.from206.cloudmusic.http.utils;
 
 import com.from206.cloudmusic.http.LifeSubscription;
 import com.from206.cloudmusic.http.Stateful;
-import com.from206.cloudmusic.utils.ErrorCodes;
+import com.from206.cloudmusic.utils.HttpCode;
 import com.from206.cloudmusic.utils.Utils;
 
 import rx.Observable;
@@ -23,7 +23,7 @@ public class HttpUtils {
         }
         if (!Utils.isNetworkAvailable()) {
             if (target != null) {
-                target.setState(ErrorCodes.NET_BREAK_OFF,"");
+                target.setState(HttpCode.NET_BREAK_OFF,"");
             }
             return;
         }

@@ -3,7 +3,11 @@ package com.from206.cloudmusic.http.injector.component;
 
 import com.from206.cloudmusic.http.injector.module.NetServiceModule;
 import com.from206.cloudmusic.module.login.view.LoginActivity;
+import com.from206.cloudmusic.module.main.view.MainActivity;
+import com.from206.cloudmusic.module.main.view.PersonalFmActivity;
+import com.from206.cloudmusic.module.main.view.RankActivity;
 import com.from206.cloudmusic.module.main.view.RecommendFragment;
+import com.from206.cloudmusic.module.user.view.PersonInfoActivity;
 
 import javax.inject.Singleton;
 
@@ -12,6 +16,10 @@ import dagger.Component;
 @Singleton
 @Component(modules = {NetServiceModule.class})
 public interface NetServiceComponent {
+    void injectMainActivity(MainActivity activity);
     void injectLoginActivity(LoginActivity activity);
     void injectRecommendFragment(RecommendFragment fragment);
+    void injectRankActivity(RankActivity activity);
+    void injectPersonalFmActivity(PersonalFmActivity activity);
+    void injectPersonInfoActivity(PersonInfoActivity activity);
 }

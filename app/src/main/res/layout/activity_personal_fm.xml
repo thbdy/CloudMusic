@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.from206.cloudmusic.view.CommonHeaderView
+        app:head_title="私人FM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.from206.cloudmusic.view.CommonHeaderView>
+
+</android.support.constraint.ConstraintLayout>

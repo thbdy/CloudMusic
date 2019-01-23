@@ -3,6 +3,7 @@ package com.from206.cloudmusic.http.injector.module;
 
 import com.from206.cloudmusic.http.IConverJsonFactory;
 import com.from206.cloudmusic.http.NetService;
+import com.from206.cloudmusic.http.cookie.CookiesManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +46,7 @@ public class NetServiceModule {
         builder.connectTimeout(60, TimeUnit.SECONDS);
         builder.readTimeout(60, TimeUnit.SECONDS);
         builder.writeTimeout(60, TimeUnit.SECONDS);
+        builder.cookieJar(new CookiesManager());
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor);
         //错误重连
