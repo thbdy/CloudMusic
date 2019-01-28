@@ -6,6 +6,8 @@ import com.from206.cloudmusic.module.main.model.BannerResult;
 import com.from206.cloudmusic.module.main.model.PersonalFmResult;
 import com.from206.cloudmusic.module.main.model.RankResult;
 import com.from206.cloudmusic.module.main.model.RefreshLoginResult;
+import com.from206.cloudmusic.module.music.model.MusicUrlResult;
+import com.from206.cloudmusic.module.music.model.PlayListDetailResult;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
 import com.from206.cloudmusic.module.user.model.UserSubCountResult;
@@ -15,7 +17,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface NetService {
-    String BASE_URL = "http://192.168.1.17:3000/";
+    String BASE_URL = "http://47.96.92.191:3000/";
 
     @GET("login/cellphone")
     Observable<LoginResult> fetchLoginInfo(@Query("phone")String phone,
@@ -52,6 +54,14 @@ public interface NetService {
     //说明 : 登陆后调用此接口 , 传入用户 id, 可以获取用户歌单
     @GET("user/playlist")
     Observable<UserPlayListResult> fetchUserPlayList(@Query("uid")String uid);
+
+    //获取歌单详情
+    @GET("playlist/detail")
+    Observable<PlayListDetailResult> fetchPlayListDetail(@Query("id")String id);
+
+    //获取音乐URL
+    @GET("song/url")
+    Observable<MusicUrlResult> fetchMusicUrl(@Query("id")String id);
 
 
 }

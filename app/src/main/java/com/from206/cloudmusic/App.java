@@ -29,6 +29,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        AppCache.init(this);
     }
 
     /**

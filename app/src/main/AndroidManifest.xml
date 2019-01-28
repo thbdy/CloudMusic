@@ -63,6 +63,17 @@
         <activity android:name=".module.user.view.PersonInfoActivity">
 
         </activity>
+        <!--歌单页面-->
+        <activity android:name=".module.music.view.SongSheetActivity">
+
+        </activity>
+        <!--音乐播放页面-->
+        <activity android:name=".module.music.view.MusicActivity">
+
+        </activity>
+        <service android:name=".service.PlayService">
+
+        </service>
     </application>
 
 </manifest>

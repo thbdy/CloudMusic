@@ -7,6 +7,8 @@ import com.from206.cloudmusic.module.main.view.MainActivity;
 import com.from206.cloudmusic.module.main.view.PersonalFmActivity;
 import com.from206.cloudmusic.module.main.view.RankActivity;
 import com.from206.cloudmusic.module.main.view.RecommendFragment;
+import com.from206.cloudmusic.module.music.view.MusicActivity;
+import com.from206.cloudmusic.module.music.view.SongSheetActivity;
 import com.from206.cloudmusic.module.user.view.PersonInfoActivity;
 
 import javax.inject.Singleton;
@@ -22,4 +24,6 @@ public interface NetServiceComponent {
     void injectRankActivity(RankActivity activity);
     void injectPersonalFmActivity(PersonalFmActivity activity);
     void injectPersonInfoActivity(PersonInfoActivity activity);
+    void injectSongSheetActivity(SongSheetActivity activity);
+    void injectMusicActivity(MusicActivity activity);
 }

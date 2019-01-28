@@ -1,18 +1,22 @@
 package com.from206.cloudmusic.module.user.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.from206.cloudmusic.R;
 import com.from206.cloudmusic.adapter.MyPlayListAdapter;
 import com.from206.cloudmusic.base.LoadingBaseActivity;
 import com.from206.cloudmusic.http.injector.component.DaggerNetServiceComponent;
 import com.from206.cloudmusic.module.login.model.LoginResult;
+import com.from206.cloudmusic.module.music.view.SongSheetActivity;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
 import com.from206.cloudmusic.module.user.model.UserSubCountResult;
@@ -26,12 +30,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by 75232 on 2019/1/23
  * Email：752323877@qq.com
  */
-public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterImpl> implements PersonInfoPresenter.View {
+public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterImpl> implements PersonInfoPresenter.View, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.iv_person_info_bg)
     ImageView ivPersonInfoBg;
@@ -57,7 +62,7 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
         //获取用户信息 , 歌单，收藏，mv, dj 数量
 //        mPresenter.fetchUserSubCount();
         //获取用户歌单
-        mPresenter.fetchUserPlayList(PersonInfoUtil.getPersonInfo().getProfile().getUserId()+"");
+        mPresenter.fetchUserPlayList(PersonInfoUtil.getPersonInfo().getProfile().getUserId() + "");
     }
 
     @Override
@@ -79,17 +84,17 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
 
     @Override
     public void setState(int state, String msg) {
-        handleState(state,msg);
+        handleState(state, msg);
     }
 
     @Override
     public void loadPersonInfo(PersonInfoResult result) {
-        if(result.getCode() == 200 ){
+        if (result.getCode() == 200) {
             Log.e("CloudMusic", "获取个人资料成功");
             personInfoResult = result;
             updatePersonInfo();
-        }else {
-            Log.e("CloudMusic", "获取个人资料失败"+result.getCode());
+        } else {
+            Log.e("CloudMusic", "获取个人资料失败" + result.getCode());
         }
 
 
@@ -102,14 +107,16 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
 
     /**
      * 用户歌单
+     *
      * @param result
      */
     @Override
     public void loadUserPlayList(UserPlayListResult result) {
-        if(result.getCode() == 200){
-            if(myPlayListAdapter == null){
+        if (result.getCode() == 200) {
+            if (myPlayListAdapter == null) {
                 myPlayListAdapter = new MyPlayListAdapter(playlistBeanList);
                 rvPlayList.setAdapter(myPlayListAdapter);
+                myPlayListAdapter.setOnItemClickListener(this);
             }
             playlistBeanList.clear();
             playlistBeanList.addAll(result.getPlaylist());
@@ -126,6 +133,7 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
 //        Glide.with(mContext).load(personInfoResult.getProfile().getBackgroundUrl()).into(ivPersonInfoBg);
 //        tvNickName.setText(personInfoResult.getProfile().getNickname());
 //    }
+
     /**
      * 更新个人页面资料
      */
@@ -134,8 +142,8 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
         Glide.with(mContext).load(profile.getAvatarUrl()).into(ivHead);
         Glide.with(mContext).load(profile.getBackgroundUrl()).into(ivPersonInfoBg);
         tvNickName.setText(profile.getNickname());
-        tvFans.setText(String.format(getResources().getString(R.string.fans),profile.getFolloweds()));
-        tvFollows.setText(String.format(getResources().getString(R.string.fans),profile.getFollows()));
+        tvFans.setText(String.format(getResources().getString(R.string.fans), profile.getFolloweds()));
+        tvFollows.setText(String.format(getResources().getString(R.string.fans), profile.getFollows()));
     }
 
     @Override
@@ -143,5 +151,22 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.iv_back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        UserPlayListResult.PlaylistBean bean = playlistBeanList.get(position);
+        Intent intent = new Intent(mContext,SongSheetActivity.class);
+        intent.putExtra("bean",bean);
+        startActivity(intent);
     }
 }

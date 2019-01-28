@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.from206.cloudmusic.view.CommonHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:head_title="歌单"/>
+    <RelativeLayout
+        android:background="@color/color999999"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/iv_cover"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignTop="@+id/iv_cover"
+            android:layout_toRightOf="@+id/iv_cover"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="猪八戒之歌"
+            android:id="@+id/tv_sheet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_sheet_name"
+            android:layout_alignStart="@+id/tv_sheet_name"
+            android:orientation="horizontal"
+            android:id="@+id/ll_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.from206.cloudmusic.view.CircleImageView
+                android:id="@+id/iv_created_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_created_name"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="猪八戒之歌"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/ll_play_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/note_btn_play_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/color666666"
+                android:text="播放全部"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textSize="13sp"
+                android:textColor="@color/color999999"
+                android:text="@string/total_music_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_music_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+
+</LinearLayout>

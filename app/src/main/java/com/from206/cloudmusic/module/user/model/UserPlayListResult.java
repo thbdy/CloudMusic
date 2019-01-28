@@ -1,12 +1,13 @@
 package com.from206.cloudmusic.module.user.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 75232 on 2019/1/23
  * Email：752323877@qq.com
  */
-public class UserPlayListResult {
+public class UserPlayListResult implements Serializable{
 
 
     /**
@@ -43,7 +44,7 @@ public class UserPlayListResult {
         this.playlist = playlist;
     }
 
-    public static class PlaylistBean {
+    public static class PlaylistBean  implements Serializable {
         /**
          * subscribers : []
          * subscribed : false
@@ -358,7 +359,7 @@ public class UserPlayListResult {
             this.tags = tags;
         }
 
-        public static class CreatorBean {
+        public static class CreatorBean  implements Serializable{
             /**
              * defaultAvatar : false
              * province : 350000

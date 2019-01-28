@@ -36,6 +36,9 @@ public class SplashActivity extends BaseActivity {
                 if(!TextUtils.isEmpty(str)){
                     finish();
                     startActivity(new Intent(mContext,MainActivity.class));
+                }else {
+                    finish();
+                    startActivity(new Intent(mContext,LoginActivity.class));
                 }
             }
 

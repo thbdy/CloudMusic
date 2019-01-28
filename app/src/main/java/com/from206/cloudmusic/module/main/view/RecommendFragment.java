@@ -41,8 +41,8 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
 
     @Override
     protected void fetchData() {
-//        //请求轮播图数据
-//        mPresenter.fetchBanner();
+        //请求轮播图数据
+        mPresenter.fetchBanner();
 
     }
 

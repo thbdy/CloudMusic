@@ -94,10 +94,15 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
 //        this.leftClickListener = leftClickListener;
 //    }
 //
-//    public void setTitle(String title) {
-//        headtitle.setText(title);
-//        headtitle.setVisibility(View.VISIBLE);
-//    }
+
+    /**
+     * 设置标题
+     * @param title
+     */
+    public void setTitle(String title) {
+        tvTitle.setText(title);
+        tvTitle.setVisibility(View.VISIBLE);
+    }
 //
 //    /**
 //     * 设置去右边文本
