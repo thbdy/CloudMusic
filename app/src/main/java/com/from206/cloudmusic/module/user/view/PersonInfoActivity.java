@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 用户个人资料页面
  * Created by 75232 on 2019/1/23
  * Email：752323877@qq.com
  */
@@ -142,7 +143,7 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
         Glide.with(mContext).load(profile.getAvatarUrl()).into(ivHead);
         Glide.with(mContext).load(profile.getBackgroundUrl()).into(ivPersonInfoBg);
         tvNickName.setText(profile.getNickname());
-        tvFans.setText(String.format(getResources().getString(R.string.fans), profile.getFolloweds()));
+        tvFans.setText(String.format(getResources().getString(R.string.follows), profile.getFolloweds()));
         tvFollows.setText(String.format(getResources().getString(R.string.fans), profile.getFollows()));
     }
 

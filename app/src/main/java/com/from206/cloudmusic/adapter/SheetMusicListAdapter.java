@@ -23,6 +23,11 @@ public class SheetMusicListAdapter extends BaseQuickAdapter<PlayListDetailResult
         helper.setText(R.id.tv_num,String.valueOf(helper.getLayoutPosition()+1));
         helper.setText(R.id.tv_music_name,item.getName());
         helper.setText(R.id.tv_author,item.getAl().getName());
+        if(item.getAlia().size() > 0){
+            helper.setText(R.id.tv_alia,"("+item.getAlia().get(0)+")");
+        }else {
+            helper.setText(R.id.tv_alia,"");
+        }
 
     }
 }

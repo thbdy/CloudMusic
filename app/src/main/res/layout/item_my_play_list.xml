@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="70dp">
-    <ImageView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.from206.cloudmusic.view.roundimage.RoundedImageView
         android:id="@+id/iv_cover"
+        app:riv_corner_radius="3dp"
         android:layout_margin="10dp"
         android:layout_width="60dp"
         android:layout_height="60dp" />
@@ -26,4 +28,10 @@
         android:text="共1首，播放11次"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <View
+        android:layout_toRightOf="@+id/iv_cover"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorEEEEEE"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 </RelativeLayout>

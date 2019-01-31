@@ -9,12 +9,14 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.from206.cloudmusic.AppCache;
 import com.from206.cloudmusic.R;
@@ -33,7 +35,9 @@ import com.from206.cloudmusic.view.CommonHeaderView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.from206.cloudmusic.AppCache.getPlayService;
 
 /**
@@ -55,6 +59,8 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     TextView tvTotalTime;
     @BindView(R.id.seek_bar)
     AppCompatSeekBar mSeekBar;
+    @BindView(R.id.iv_bg)
+    ImageView ivBg;
     private ServiceConnection mPlayServiceConnection;
     private Music music = new Music();
     private boolean isDraggingProgress;
@@ -63,15 +69,28 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      * 圆盘旋转动画
      */
     private ObjectAnimator discAnimation;
+    private static final String TAG = "MusicActivity";
 
 
 
     @Override
     public void fetchData() {
-        mPresenter.fetchMusicUrl(String.valueOf(musicBean.getId()));
-//        mPresenter.fetchMusicUrl(String.valueOf("5052317"));
-
+        checkService();
     }
+
+    /**
+     * 请求数据
+     */
+    private void initData(){
+        if (!getPlayService().isIdle() && getPlayService().getPlayingMusic().getId() == musicBean.getId()) {//同一首歌
+            onChangeImpl(getPlayService().getPlayingMusic());
+        } else {
+            getPlayService().stop();
+            mPresenter.fetchMusicUrl(String.valueOf(musicBean.getId()));
+        }
+    }
+
+
 
     @Override
     protected void initInject() {
@@ -85,11 +104,26 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if( mPlayServiceConnection != null){
+            unbindService(mPlayServiceConnection);
+        }
+    }
+
+    @Override
     protected void initViews() {
         musicBean = (PlayListDetailResult.PlaylistBean.TracksBean) getIntent().getSerializableExtra("bean");
-        checkService();
-        initUI();
         initAni();
+//        initMusicData();
+        initUI();
+    }
+
+    /**
+     * 初始化音乐数据
+     */
+    private void initMusicData() {
+
     }
 
     /**
@@ -110,6 +144,12 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         headerView.setTitle(musicBean.getName());
         Glide.with(mContext).load(musicBean.getAl().getPicUrl()).into(ivCover);
         mSeekBar.setOnSeekBarChangeListener(this);
+        music.setName(musicBean.getName());
+        //虚化背景图片
+        Glide.with(this).load(musicBean.getAl().getPicUrl())
+                .apply(bitmapTransform(new BlurTransformation(2,99)))
+                .into(ivBg);
+
     }
 
     /**
@@ -123,13 +163,24 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
                 public void run() {
                     bindService();
                 }
-            }, 1000);
+            },500);
+        }else {
+            AppCache.getPlayService().setOnPlayEventListener(MusicActivity.this);
+            initData();
         }
     }
+
+    /**
+     * 启动服务
+     */
     private void startService() {
         Intent intent = new Intent(this, PlayService.class);
         startService(intent);
     }
+
+    /**
+     * 绑定服务
+     */
     private void bindService() {
         Intent intent = new Intent();
         intent.setClass(this, PlayService.class);
@@ -145,6 +196,11 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     @Override
     public void loadMusicUrl(MusicUrlResult result) {
         if(result.getCode() == HttpCode.SUCCESS){
+            if(result.getData().get(0).getCode() == HttpCode.NOT_FOUND){
+                ToastUtils.showShort("资源找不到");
+                this.finish();
+                return;
+            }
             music.setId( result.getData().get(0).getId());
             music.setPath( result.getData().get(0).getUrl());
         }
@@ -158,10 +214,12 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
                 break;
             case R.id.tv_play:
                 if(getPlayService().isPausing()|| getPlayService().isPlaying()){
+                    Log.e(TAG, "onViewClicked: 正在播放" );
                     AppCache.getPlayService().playPause();
                 }else {
+                    Log.e(TAG, "onViewClicked: 没在播放" );
                     AppCache.getPlayService().play(music);
-                    discAnimation.start();//开始动画
+
                 }
                 break;
         }
@@ -182,26 +240,30 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         }
         mLastProgress = 0;
         tvCurrentTime.setText("00:00");
+        Log.e(TAG, "onChangeImpl: "+ (int)getPlayService().getDuration());
         tvTotalTime.setText(TimeUtil.duration2Time((int)getPlayService().getDuration()));
         mSeekBar.setProgress((int) getPlayService().getCurrentPosition());
         mSeekBar.setMax((int) getPlayService().getDuration());
+        discAnimation.start();//开始动画
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
-//            btnPlay.setText("暂停");
+            Log.e(TAG, "onChangeImpl: 正在播放" );
             tvPlay.setActivated(true);
         } else {
+            Log.e(TAG, "onChangeImpl: 没在播放" );
             tvPlay.setActivated(false);
-//            btnPlay.setText("播放");
         }
     }
 
     @Override
     public void onPlayerStart() {
+        Log.e(TAG, "onPlayerStart: " );
         tvPlay.setActivated(true);
         discAnimation.resume();
     }
 
     @Override
     public void onPlayerPause() {
+        Log.e(TAG, "onPlayerPause: " );
         tvPlay.setActivated(false);
         discAnimation.pause();
     }
@@ -223,8 +285,6 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     public void onGetDuration(long duration) {
         mSeekBar.setMax((int) duration);
         tvTotalTime.setText(TimeUtil.duration2Time((int)duration));
-
-
     }
 
     @Override
@@ -270,13 +330,17 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     private  class PlayServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("Service", "PlayServiceConnection onServiceConnected: " );
             final PlayService playService = ((PlayService.PlayBinder) service).getService();
             AppCache.setPlayService(playService);
             AppCache.getPlayService().setOnPlayEventListener(MusicActivity.this);
+            initData();
+
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.e("Service", "PlayServiceConnection onServiceDisconnected: " );
         }
     }
 }

@@ -9,12 +9,19 @@
         android:layout_height="wrap_content"
         app:head_title="歌单"/>
     <RelativeLayout
+        android:id="@+id/rl_bg"
         android:background="@color/color999999"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="220dp">
         <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/iv_blur_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.from206.cloudmusic.view.roundimage.RoundedImageView
+            android:layout_marginTop="30dp"
+            app:riv_corner_radius="5dp"
             android:src="@mipmap/ic_launcher"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:id="@+id/iv_cover"
             android:layout_width="100dp"
@@ -51,6 +58,55 @@
                 android:textColor="@color/white"
                 android:text="猪八戒之歌"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="13sp"
+                android:drawablePadding="-10dp"
+                android:gravity="center"
+                android:drawableTop="@drawable/aww"
+                android:text="评论"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="13sp"
+                android:drawablePadding="-10dp"
+                android:gravity="center"
+                android:drawableTop="@drawable/aww"
+                android:text="分享"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="13sp"
+                android:drawablePadding="-10dp"
+                android:gravity="center"
+                android:drawableTop="@drawable/aww"
+                android:text="下载"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="13sp"
+                android:drawablePadding="-10dp"
+                android:gravity="center"
+                android:drawableTop="@drawable/aww"
+                android:text="多选"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

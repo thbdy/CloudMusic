@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 /**
  * 歌单页面
@@ -46,6 +50,10 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
     LinearLayout llCreated;
     @BindView(R.id.rv_music_list)
     RecyclerView rvMusicList;
+    @BindView(R.id.rl_bg)
+    RelativeLayout rlBg;
+    @BindView(R.id.iv_blur_bg)
+    ImageView ivBlurBg;
     /**
      * 歌单资料
      */
@@ -88,9 +96,12 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
         tvSheetName.setText(bean.getName());
         Glide.with(mContext).load(bean.getCreator().getAvatarUrl()).into(ivCreatedIcon);
         Glide.with(mContext).load(bean.getCoverImgUrl()).into(ivCover);
-
-
+        //虚化背景图片
+        Glide.with(this).load(bean.getCoverImgUrl())
+                .apply(bitmapTransform(new BlurTransformation(99,2)))
+                .into(ivBlurBg);
     }
+
 
     @Override
     public void setState(int state, String msg) {

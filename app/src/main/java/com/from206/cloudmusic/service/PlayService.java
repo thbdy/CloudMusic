@@ -10,6 +10,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.from206.cloudmusic.AppCache;
@@ -157,6 +158,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             mPlayer.reset();
 //            Uri mUri = Uri.parse("android.resource://" + getPackageName() + "/"+ R.raw.video);
 //            mPlayer.setDataSource(this,mUri);
+            Log.e(TAG, "play: "+music.getPath() );
             mPlayer.setDataSource(music.getPath());
             mPlayer.prepareAsync();
             mPlayState = STATE_PREPARING;

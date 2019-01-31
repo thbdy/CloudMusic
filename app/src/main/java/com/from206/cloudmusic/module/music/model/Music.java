@@ -5,23 +5,37 @@ package com.from206.cloudmusic.module.music.model;
  * Email：752323877@qq.com
  */
 public class Music {
-    @Override
-    public String toString() {
-        return "Music{" +
-                "id=" + id +
-                ", path='" + path + '\'' +
-                '}';
+    private long id;
+    private String path;
+    private String name;
+    private String author;
+
+
+
+
+
+
+
+
+
+
+
+    public String getName() {
+        return name;
     }
 
-    public long getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getAuthor() {
+        return author;
     }
 
-    long id;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 
     public String getPath() {
         return path;
@@ -30,6 +44,11 @@ public class Music {
     public void setPath(String path) {
         this.path = path;
     }
+    public long getId() {
+        return id;
+    }
 
-    String path;
+    public void setId(long id) {
+        this.id = id;
+    }
 }

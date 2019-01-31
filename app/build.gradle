@@ -60,5 +60,9 @@ dependencies {
 
     implementation 'com.blankj:utilcode:1.23.0'
 
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+
+
+
 
 }
