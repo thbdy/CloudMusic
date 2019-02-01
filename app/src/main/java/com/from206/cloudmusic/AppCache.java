@@ -78,6 +78,13 @@ public class AppCache {
     public static List<Music> getMusicList() {
         return getInstance().mMusicList;
     }
+    public static void addMusicList(Music music){
+        int index = getInstance().mMusicList.indexOf(music);
+        if(index < 0){
+            getInstance().mMusicList.add(music);
+        }
+
+    }
 
 
 

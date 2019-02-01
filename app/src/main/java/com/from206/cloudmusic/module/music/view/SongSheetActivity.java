@@ -37,7 +37,7 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
  * Created by 75232 on 2019/1/25
  * Email：752323877@qq.com
  */
-public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImpl> implements SongSheetPresenter.View, BaseQuickAdapter.OnItemClickListener {
+public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImpl> implements SongSheetPresenter.View, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.iv_cover)
     ImageView ivCover;
     @BindView(R.id.tv_sheet_name)
@@ -72,7 +72,6 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
     @Override
     protected void initInject() {
         DaggerNetServiceComponent.builder().build().injectSongSheetActivity(this);
-
     }
 
     @Override
@@ -125,6 +124,7 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
                 sheetMusicListAdapter = new SheetMusicListAdapter(playlistBeanList);
                 rvMusicList.setAdapter(sheetMusicListAdapter);
                 sheetMusicListAdapter.setOnItemClickListener(this);
+                sheetMusicListAdapter.setOnItemChildClickListener(this);
             }
             playlistBeanList.clear();
             playlistBeanList.addAll(result.getPlaylist().getTracks());
@@ -145,5 +145,14 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
         Intent intent = new Intent(mContext,MusicActivity.class);
         intent.putExtra("bean",playlistBeanList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if(view.getId() == R.id.iv_mv){
+            Intent mvIntent = new Intent(mContext,MusicVideoActivity.class);
+            mvIntent.putExtra("id",playlistBeanList.get(position).getMv());
+            startActivity(mvIntent);
+        }
     }
 }

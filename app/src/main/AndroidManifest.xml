@@ -71,6 +71,15 @@
         <activity android:name=".module.music.view.MusicActivity">
 
         </activity>
+        <!--MV页面-->
+        <activity android:name=".module.music.view.MusicVideoActivity">
+
+        </activity>
+        <!--歌曲评论页面-->
+        <activity android:name=".module.music.view.MusicCommentActivity">
+
+        </activity>
+        <!--音乐播放服务-->
         <service android:name=".service.PlayService">
 
         </service>

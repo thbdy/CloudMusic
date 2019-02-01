@@ -28,7 +28,6 @@ import java.util.Random;
 
 /**
  * 音乐播放后台服务
- * Created by wcy on 2015/11/27.
  */
 public class PlayService extends Service implements MediaPlayer.OnCompletionListener {
     private static final String TAG = "Service";
@@ -91,36 +90,6 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         return START_NOT_STICKY;
     }
 
-//    /**
-//     * 扫描音乐
-//     */
-//    public void updateMusicList(final EventCallback<Void> callback) {
-//        new AsyncTask<Void, Void, List<Music>>() {
-//            @Override
-//            protected List<Music> doInBackground(Void... params) {
-//                return MusicUtils.scanMusic(PlayService.this);
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<Music> musicList) {
-//                AppCache.getMusicList().clear();
-//                AppCache.getMusicList().addAll(musicList);
-//
-//                if (!AppCache.getMusicList().isEmpty()) {
-//                    updatePlayingPosition();
-//                    mPlayingMusic = AppCache.getMusicList().get(mPlayingPosition);
-//                }
-//
-//                if (mListener != null) {
-//                    mListener.onMusicListUpdate();
-//                }
-//
-//                if (callback != null) {
-//                    callback.onEvent(null);
-//                }
-//            }
-//        }.execute();
-//    }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
@@ -167,6 +136,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             if (mListener != null) {
                 mListener.onChange(music);
             }
+            AppCache.addMusicList(music);//添加到播放列表里
 //            Notifier.showPlay(music);
 //            mMediaSessionManager.updateMetaData(mPlayingMusic);
 //            mMediaSessionManager.updatePlaybackState();

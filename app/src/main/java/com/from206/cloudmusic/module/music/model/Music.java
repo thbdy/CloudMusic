@@ -1,25 +1,44 @@
 package com.from206.cloudmusic.module.music.model;
 
+import java.io.Serializable;
+
 /**
  * Created by 75232 on 2019/1/28
  * Email：752323877@qq.com
  */
-public class Music {
+public class Music implements Serializable {
+    /**
+     * 歌曲iD
+     */
     private long id;
+    /**
+     * 地址
+     */
     private String path;
+    /**
+     * 歌曲名
+     */
     private String name;
+    /**
+     * 作者
+     */
     private String author;
+    /**
+     * 封面图片
+     */
+    private String picUrl;
 
 
 
 
 
+    public String getPicUrl() {
+        return picUrl;
+    }
 
-
-
-
-
-
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
     public String getName() {
         return name;
     }

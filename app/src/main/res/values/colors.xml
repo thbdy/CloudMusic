@@ -9,8 +9,11 @@
     <color name="green">#00ff00</color>
 
     <color name="color333333">#333333</color>
+    <color name="color363636">#363636</color>
     <color name="color666666">#666666</color>
     <color name="color999999">#999999</color>
+    <color name="colorAAAAAA">#aaaaaa</color>
+    <color name="colorBBBBBB">#bbbbbb</color>
     <color name="colorCCCCCC">#cccccc</color>
     <color name="colorDDDDDD">#dddddd</color>
     <color name="colorDEDEDE">#dedede</color>

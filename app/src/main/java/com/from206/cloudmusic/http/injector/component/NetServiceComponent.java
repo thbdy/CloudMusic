@@ -8,6 +8,8 @@ import com.from206.cloudmusic.module.main.view.PersonalFmActivity;
 import com.from206.cloudmusic.module.main.view.RankActivity;
 import com.from206.cloudmusic.module.main.view.RecommendFragment;
 import com.from206.cloudmusic.module.music.view.MusicActivity;
+import com.from206.cloudmusic.module.music.view.MusicCommentActivity;
+import com.from206.cloudmusic.module.music.view.MusicVideoActivity;
 import com.from206.cloudmusic.module.music.view.SongSheetActivity;
 import com.from206.cloudmusic.module.user.view.PersonInfoActivity;
 
@@ -26,4 +28,6 @@ public interface NetServiceComponent {
     void injectPersonInfoActivity(PersonInfoActivity activity);
     void injectSongSheetActivity(SongSheetActivity activity);
     void injectMusicActivity(MusicActivity activity);
+    void injectMusicVideoActivity(MusicVideoActivity activity);
+    void injectMusicCommentActivity(MusicCommentActivity activity);
 }

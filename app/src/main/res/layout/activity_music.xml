@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/xf"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:scaleType="centerCrop"
@@ -40,7 +41,47 @@
         android:layout_height="wrap_content" />
 
 
+    <!--收藏，下载，评论，音效-->
     <LinearLayout
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_above="@+id/ll_seek_bar"
+        android:id="@+id/ll_menu_1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/selector_music_play_action_like"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/selector_music_play_action_download"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/selector_music_play_action_effect"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_music_comment"
+            android:src="@drawable/selector_music_play_action_comment"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/selector_music_play_action_menu"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!--进度栏-->
+    <LinearLayout
+        android:id="@+id/ll_seek_bar"
         android:gravity="center_vertical"
         android:layout_above="@+id/rl_bottom"
         android:layout_width="match_parent"
@@ -87,9 +128,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/tv_next"
             android:layout_toRightOf="@+id/tv_play"
             android:layout_centerVertical="true"
-            android:background="@drawable/play_rdi_icn_next"
+            android:background="@drawable/selector_next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_previous"
+            android:layout_toLeftOf="@+id/tv_play"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_prev_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

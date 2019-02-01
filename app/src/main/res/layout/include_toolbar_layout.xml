@@ -4,6 +4,9 @@
     android:background="@color/colorPrimary"
     android:layout_height="50dp">
     <TextView
+        android:singleLine="true"
+        android:maxEms="8"
+        android:ellipsize="end"
         android:layout_toRightOf="@+id/iv_back"
         android:text="这是标题"
         android:id="@+id/tv_title"

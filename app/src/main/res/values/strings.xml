@@ -5,4 +5,5 @@
     <string name="fans">粉丝&#32;%d</string>
     <string name="my_play_list_desc">%1$d首&#32;播放%2$d次</string>
     <string name="total_music_num">(共$s首)</string>
+    <string name="total_music_comment">评论(%1$d)</string>
 </resources>

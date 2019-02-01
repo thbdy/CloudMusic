@@ -1,0 +1,17 @@
+adapter
+base
+http
+              ---SplashActivity
+      ---login-  LoginActivity
+      -       ---LoginMainActivity
+      -
+      -
+module-  main---mainAc
+      -
+      -
+      -  music
+      ---user
+
+service
+utils
+view

@@ -70,6 +70,10 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      */
     private ObjectAnimator discAnimation;
     private static final String TAG = "MusicActivity";
+    /**
+     * 正在播放的音乐ID
+     */
+    private long mPlayingMusicId;
 
 
 
@@ -77,81 +81,6 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     public void fetchData() {
         checkService();
     }
-
-    /**
-     * 请求数据
-     */
-    private void initData(){
-        if (!getPlayService().isIdle() && getPlayService().getPlayingMusic().getId() == musicBean.getId()) {//同一首歌
-            onChangeImpl(getPlayService().getPlayingMusic());
-        } else {
-            getPlayService().stop();
-            mPresenter.fetchMusicUrl(String.valueOf(musicBean.getId()));
-        }
-    }
-
-
-
-    @Override
-    protected void initInject() {
-        DaggerNetServiceComponent.builder().build().injectMusicActivity(this);
-
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_music;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if( mPlayServiceConnection != null){
-            unbindService(mPlayServiceConnection);
-        }
-    }
-
-    @Override
-    protected void initViews() {
-        musicBean = (PlayListDetailResult.PlaylistBean.TracksBean) getIntent().getSerializableExtra("bean");
-        initAni();
-//        initMusicData();
-        initUI();
-    }
-
-    /**
-     * 初始化音乐数据
-     */
-    private void initMusicData() {
-
-    }
-
-    /**
-     * 初始化动画
-     */
-    private void initAni() {
-        discAnimation = ObjectAnimator.ofFloat(ivCover, "rotation", 0f, 360f);
-        discAnimation.setDuration(20000);//设置转一圈需要的时间
-        discAnimation.setInterpolator(new LinearInterpolator() );//设置插速器
-        discAnimation.setRepeatCount(-1);//设置旋转次数
-        discAnimation.setRepeatMode(ValueAnimator.RESTART);//设置旋转重复模
-    }
-
-    /**
-     * 初始化UI
-     */
-    private void initUI() {
-        headerView.setTitle(musicBean.getName());
-        Glide.with(mContext).load(musicBean.getAl().getPicUrl()).into(ivCover);
-        mSeekBar.setOnSeekBarChangeListener(this);
-        music.setName(musicBean.getName());
-        //虚化背景图片
-        Glide.with(this).load(musicBean.getAl().getPicUrl())
-                .apply(bitmapTransform(new BlurTransformation(2,99)))
-                .into(ivBg);
-
-    }
-
     /**
      * 检测服务有没有运行
      */
@@ -169,7 +98,6 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
             initData();
         }
     }
-
     /**
      * 启动服务
      */
@@ -188,6 +116,84 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         bindService(intent, mPlayServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    /**
+     * 请求数据
+     */
+    private void initData(){
+        if (!getPlayService().isIdle() && getPlayService().getPlayingMusic().getId() == musicBean.getId()) {//同一首歌
+            onChangeImpl(getPlayService().getPlayingMusic());
+        } else {
+            getPlayService().stop();
+            mPresenter.fetchMusicUrl(String.valueOf(musicBean.getId()));
+        }
+    }
+
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if( mPlayServiceConnection != null){
+            unbindService(mPlayServiceConnection);
+        }
+    }
+
+    @Override
+    protected void initViews() {
+        musicBean = (PlayListDetailResult.PlaylistBean.TracksBean) getIntent().getSerializableExtra("bean");
+        initAni();
+        initUI();
+        initListener();
+    }
+    /**
+     * 初始化动画
+     */
+    private void initAni() {
+        discAnimation = ObjectAnimator.ofFloat(ivCover, "rotation", 0f, 360f);
+        discAnimation.setDuration(20000);//设置转一圈需要的时间
+        discAnimation.setInterpolator(new LinearInterpolator() );//设置插速器
+        discAnimation.setRepeatCount(-1);//设置旋转次数
+        discAnimation.setRepeatMode(ValueAnimator.RESTART);//设置旋转重复模
+    }
+    /**
+     * 初始化一些监听事件
+     */
+    private void initListener() {
+        mSeekBar.setOnSeekBarChangeListener(this);
+    }
+
+
+
+
+    /**
+     * 初始化UI
+     */
+    private void initUI() {
+        headerView.setTitle(musicBean.getName());
+        Glide.with(mContext).load(musicBean.getAl().getPicUrl()).into(ivCover);
+        //虚化背景图片
+        Glide.with(this).load(musicBean.getAl().getPicUrl())
+                .apply(bitmapTransform(new BlurTransformation(2,99)))
+                .into(ivBg);
+    }
+    /**
+     * 初始化UI
+     */
+    private void initUI(Music music) {
+        headerView.setTitle(music.getName());
+        Glide.with(mContext).load(music.getPicUrl()).into(ivCover);
+        //虚化背景图片
+        Glide.with(this).load(music.getPicUrl())
+                .apply(bitmapTransform(new BlurTransformation(2,99)))
+                .into(ivBg);
+    }
+
+
+
+
+
     @Override
     public void setState(int state, String msg) {
 
@@ -203,10 +209,14 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
             }
             music.setId( result.getData().get(0).getId());
             music.setPath( result.getData().get(0).getUrl());
+            music.setPicUrl(musicBean.getAl().getPicUrl());
+            music.setName(musicBean.getName());
+            music.setAuthor(musicBean.getAr().get(0).getName());
+            tvPlay.performClick();
         }
 
     }
-    @OnClick({R.id.iv_back,R.id.tv_play})
+    @OnClick({R.id.iv_back,R.id.tv_play,R.id.tv_next,R.id.tv_previous,R.id.iv_music_comment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -214,13 +224,23 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
                 break;
             case R.id.tv_play:
                 if(getPlayService().isPausing()|| getPlayService().isPlaying()){
-                    Log.e(TAG, "onViewClicked: 正在播放" );
                     AppCache.getPlayService().playPause();
                 }else {
-                    Log.e(TAG, "onViewClicked: 没在播放" );
                     AppCache.getPlayService().play(music);
-
+                    mPlayingMusicId = music.getId();
                 }
+                break;
+            case R.id.tv_next:
+                getPlayService().next();
+                break;
+            case R.id.tv_previous:
+                getPlayService().prev();
+                break;
+                //评论
+            case R.id.iv_music_comment:
+                Intent intent = new Intent(mContext,MusicCommentActivity.class);
+                intent.putExtra("music",getPlayService().getPlayingMusic());
+                startActivity(intent);
                 break;
         }
     }
@@ -238,27 +258,42 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         if (music == null) {
             return;
         }
-        mLastProgress = 0;
-        tvCurrentTime.setText("00:00");
-        Log.e(TAG, "onChangeImpl: "+ (int)getPlayService().getDuration());
         tvTotalTime.setText(TimeUtil.duration2Time((int)getPlayService().getDuration()));
-        mSeekBar.setProgress((int) getPlayService().getCurrentPosition());
         mSeekBar.setMax((int) getPlayService().getDuration());
-        discAnimation.start();//开始动画
+        mSeekBar.setProgress((int) getPlayService().getCurrentPosition());
+        tvCurrentTime.setText(TimeUtil.duration2Time(mSeekBar.getProgress()));
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
-            Log.e(TAG, "onChangeImpl: 正在播放" );
+            mLastProgress = (int) getPlayService().getDuration();
             tvPlay.setActivated(true);
+            startAni();
+            initUI(music);
         } else {
-            Log.e(TAG, "onChangeImpl: 没在播放" );
+            mLastProgress = 0;
             tvPlay.setActivated(false);
         }
+    }
+
+    /**
+     * 启动动画
+     */
+    private void startAni(){
+        if(discAnimation.isRunning()&& !discAnimation.isPaused()){
+            return;
+        }
+        if(discAnimation.isPaused()){
+            discAnimation.resume();
+        }else {
+            discAnimation.start();
+        }
+
     }
 
     @Override
     public void onPlayerStart() {
         Log.e(TAG, "onPlayerStart: " );
         tvPlay.setActivated(true);
-        discAnimation.resume();
+        startAni();
+
     }
 
     @Override
@@ -342,5 +377,15 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         public void onServiceDisconnected(ComponentName name) {
             Log.e("Service", "PlayServiceConnection onServiceDisconnected: " );
         }
+    }
+    @Override
+    protected void initInject() {
+        DaggerNetServiceComponent.builder().build().injectMusicActivity(this);
+
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_music;
     }
 }

@@ -1,6 +1,8 @@
 package com.from206.cloudmusic.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -28,6 +30,13 @@ public class SheetMusicListAdapter extends BaseQuickAdapter<PlayListDetailResult
         }else {
             helper.setText(R.id.tv_alia,"");
         }
+        ImageView ivMv = helper.getView(R.id.iv_mv);
+        if(item.getMv() == 0){
+            ivMv.setVisibility(View.INVISIBLE);
+        }else {
+            ivMv.setVisibility(View.VISIBLE);
+        }
+        helper.addOnClickListener(R.id.iv_mv);
 
     }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.from206.cloudmusic.view.CircleImageView
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="10dp"
+        android:id="@+id/iv_head"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+    <TextView
+        android:text="发言人昵称"
+        android:textColor="@color/color666666"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/iv_head"
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_time"
+        android:layout_below="@+id/tv_user_name"
+        android:textSize="10sp"
+        android:layout_toRightOf="@+id/iv_head"
+        android:text="2018年11月11日"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="14sp"
+        android:textColor="@color/color363636"
+        android:text="这里显示发言人的发言内容这里显示发言人的发言内容这里显示发言人的发言内容这里显示发言人的发言内容这里显示发言人的发言内容这里显示发言人的发言内容"
+        android:layout_below="@+id/tv_time"
+        android:id="@+id/tv_user_comment"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@color/colorBBBBBB"
+            android:layout_marginRight="5dp"
+            android:text="1100"
+            android:id="@+id/tv_comment_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/at4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:background="@color/colorEEEEEE"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_user_comment"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+</RelativeLayout>

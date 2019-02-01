@@ -6,7 +6,9 @@ import com.from206.cloudmusic.module.main.model.BannerResult;
 import com.from206.cloudmusic.module.main.model.PersonalFmResult;
 import com.from206.cloudmusic.module.main.model.RankResult;
 import com.from206.cloudmusic.module.main.model.RefreshLoginResult;
+import com.from206.cloudmusic.module.music.model.MusicCommentResult;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
+import com.from206.cloudmusic.module.music.model.MusicVideoResult;
 import com.from206.cloudmusic.module.music.model.PlayListDetailResult;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
@@ -62,6 +64,15 @@ public interface NetService {
     //获取音乐URL
     @GET("song/url")
     Observable<MusicUrlResult> fetchMusicUrl(@Query("id")String id);
+
+
+    //获取MV URL
+    @GET("mv/url")
+    Observable<MusicVideoResult> fetchMusicVideo(@Query("id")String id);
+
+    //获取音乐评论
+    @GET("comment/music")
+    Observable<MusicCommentResult> fetchMusicComment(@Query("id")String id);
 
 
 }
