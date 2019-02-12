@@ -3,6 +3,7 @@ package com.from206.cloudmusic.http.injector.component;
 
 import com.from206.cloudmusic.http.injector.module.NetServiceModule;
 import com.from206.cloudmusic.module.login.view.LoginActivity;
+import com.from206.cloudmusic.module.main.view.DailyRecommendActivity;
 import com.from206.cloudmusic.module.main.view.MainActivity;
 import com.from206.cloudmusic.module.main.view.PersonalFmActivity;
 import com.from206.cloudmusic.module.main.view.RankActivity;
@@ -30,4 +31,5 @@ public interface NetServiceComponent {
     void injectMusicActivity(MusicActivity activity);
     void injectMusicVideoActivity(MusicVideoActivity activity);
     void injectMusicCommentActivity(MusicCommentActivity activity);
+    void injectDailyRecommendActivity(DailyRecommendActivity activity);
 }

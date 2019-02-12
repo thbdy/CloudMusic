@@ -15,6 +15,7 @@
         <com.from206.cloudmusic.view.CommonHeaderView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:head_show_back="false"
             app:head_title="云音乐"/>
 
         <FrameLayout

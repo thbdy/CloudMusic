@@ -4,6 +4,8 @@ import com.from206.cloudmusic.base.BasePresenter;
 import com.from206.cloudmusic.http.NetService;
 import com.from206.cloudmusic.http.utils.Callback;
 import com.from206.cloudmusic.module.main.model.BannerResult;
+import com.from206.cloudmusic.module.main.model.DJProgramResult;
+import com.from206.cloudmusic.module.main.model.RecommendResourceResult;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,26 @@ public class RecommendPresenterImpl extends BasePresenter<RecommendPresenter.Vie
             @Override
             public void onResponse(BannerResult data) {
                 mView.loadBannerInfo(data);
+            }
+        });
+    }
+
+    @Override
+    public void fetchRecommendResource() {
+        invoke(service.fetchRecommendResource(),new Callback<RecommendResourceResult>(){
+            @Override
+            public void onResponse(RecommendResourceResult data) {
+                mView.loadRecommendResource(data);
+            }
+        });
+    }
+
+    @Override
+    public void fetchDJProgram() {
+        invoke(service.fetchDJProgram(),new Callback<DJProgramResult>(){
+            @Override
+            public void onResponse(DJProgramResult data) {
+                mView.loadDJProgram(data);
             }
         });
     }

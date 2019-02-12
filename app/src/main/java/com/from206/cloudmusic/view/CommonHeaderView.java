@@ -22,7 +22,7 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
     ImageView ivArrowDown;
     TextView tvRight;
     TextView tvLeftText;
-    ImageView ivLeft;
+    ImageView ivBack;
     private Context mContext;
 
     public CommonHeaderView(Context context, AttributeSet attrs) {
@@ -30,47 +30,23 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
         this.mContext = context;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.include_toolbar_layout, this, true);
-        tvTitle = (TextView) view.findViewById(R.id.tv_title);
-//        headBack = (LinearLayout) view.findViewById(R.id.back_img);
-//        ivLeft = view.findViewById(R.id.iv_head_left_image);
-//        tvLeftText = view.findViewById(R.id.tv_left_text);
-//        ivArrowDown = view.findViewById(R.id.iv_arrow_down);
-//        tvRight = view.findViewById(R.id.tv_right);
-//        headBack.setOnClickListener(this);
+        tvTitle = view.findViewById(R.id.tv_title);
+        ivBack = view.findViewById(R.id.iv_back);
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.CommonHeaderView);
 //
         String titleText = typedArray.getString(R.styleable.CommonHeaderView_head_title);
-//        boolean showArrow = typedArray.getBoolean(R.styleable.CommonHeaderView_head_title_arrow,false);
+        boolean showBack = typedArray.getBoolean(R.styleable.CommonHeaderView_head_show_back,true);
 //        boolean showTextRight = typedArray.getBoolean(R.styleable.CommonHeaderView_head_text_right,false);
 //        boolean showTextLeft = typedArray.getBoolean(R.styleable.CommonHeaderView_head_left_text,false);
 
-//        if(showTextRight){
-//            tvRight.setVisibility(VISIBLE);
-//        }
-//        if(showTextLeft){
-//            tvLeftText.setVisibility(VISIBLE);
-//            ivLeft.setVisibility(VISIBLE);
-//        }
-//
+        ivBack.setVisibility(showBack?VISIBLE:INVISIBLE);
         if (TextUtils.isEmpty(titleText)) {
             tvTitle.setVisibility(View.GONE);
         } else {
             tvTitle.setText(titleText);
             tvTitle.setVisibility(View.VISIBLE);
         }
-//        if(showArrow){
-//            ivArrowDown.setVisibility(VISIBLE);
-//        }else {
-//            ivArrowDown.setVisibility(INVISIBLE);
-//        }
-//
-//        boolean leftVisible = typedArray.getBoolean(R.styleable.CommonHeaderView_head_left_visible, true);
-//        if (leftVisible) {
-//            headBack.setVisibility(View.VISIBLE);
-//        } else {
-//            headBack.setVisibility(View.GONE);
-//        }
-//        typedArray.recycle();
+        typedArray.recycle();
     }
 
 
@@ -79,21 +55,6 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
 
     }
 
-//    public interface OnLeftClickListener {
-//        void leftClicked();
-//    }
-//
-//    public interface OnRightClickListener {
-//        void rightClicked();
-//    }
-//
-//    private OnLeftClickListener leftClickListener;
-//    private OnRightClickListener rightClickListener;
-//
-//    public void setLeftClickListener(OnLeftClickListener leftClickListener) {
-//        this.leftClickListener = leftClickListener;
-//    }
-//
 
     /**
      * 设置标题
@@ -103,15 +64,6 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
         tvTitle.setText(title);
         tvTitle.setVisibility(View.VISIBLE);
     }
-//
-//    /**
-//     * 设置去右边文本
-//     * @param title
-//     */
-//    public void setRightText(String title) {
-//        tvRight.setText(title);
-//        tvRight.setVisibility(View.VISIBLE);
-//    }
 
 
 }

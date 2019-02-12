@@ -24,7 +24,6 @@ import com.from206.cloudmusic.base.LoadingBaseActivity;
 import com.from206.cloudmusic.http.injector.component.DaggerNetServiceComponent;
 import com.from206.cloudmusic.module.music.model.Music;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
-import com.from206.cloudmusic.module.music.model.PlayListDetailResult;
 import com.from206.cloudmusic.module.music.presenter.MusicPresenter;
 import com.from206.cloudmusic.module.music.presenter.MusicPresenterImpl;
 import com.from206.cloudmusic.service.OnPlayerEventListener;
@@ -46,7 +45,7 @@ import static com.from206.cloudmusic.AppCache.getPlayService;
  * Email：752323877@qq.com
  */
 public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> implements MusicPresenter.View, OnPlayerEventListener, SeekBar.OnSeekBarChangeListener {
-    private PlayListDetailResult.PlaylistBean.TracksBean musicBean;
+//    private PlayListDetailResult.PlaylistBean.TracksBean musicBean;
     @BindView(R.id.head_view)
     CommonHeaderView headerView;
     @BindView(R.id.tv_play)
@@ -120,11 +119,11 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      * 请求数据
      */
     private void initData(){
-        if (!getPlayService().isIdle() && getPlayService().getPlayingMusic().getId() == musicBean.getId()) {//同一首歌
+        if (!getPlayService().isIdle() && getPlayService().getPlayingMusic().getId() == music.getId()) {//同一首歌
             onChangeImpl(getPlayService().getPlayingMusic());
         } else {
             getPlayService().stop();
-            mPresenter.fetchMusicUrl(String.valueOf(musicBean.getId()));
+            mPresenter.fetchMusicUrl(String.valueOf(music.getId()));
         }
     }
 
@@ -142,7 +141,7 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
 
     @Override
     protected void initViews() {
-        musicBean = (PlayListDetailResult.PlaylistBean.TracksBean) getIntent().getSerializableExtra("bean");
+        music = (Music) getIntent().getSerializableExtra("music");
         initAni();
         initUI();
         initListener();
@@ -171,10 +170,10 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      * 初始化UI
      */
     private void initUI() {
-        headerView.setTitle(musicBean.getName());
-        Glide.with(mContext).load(musicBean.getAl().getPicUrl()).into(ivCover);
+        headerView.setTitle(music.getName());
+        Glide.with(mContext).load(music.getPicUrl()).into(ivCover);
         //虚化背景图片
-        Glide.with(this).load(musicBean.getAl().getPicUrl())
+        Glide.with(this).load(music.getPicUrl())
                 .apply(bitmapTransform(new BlurTransformation(2,99)))
                 .into(ivBg);
     }
@@ -207,11 +206,7 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
                 this.finish();
                 return;
             }
-            music.setId( result.getData().get(0).getId());
             music.setPath( result.getData().get(0).getUrl());
-            music.setPicUrl(musicBean.getAl().getPicUrl());
-            music.setName(musicBean.getName());
-            music.setAuthor(musicBean.getAr().get(0).getName());
             tvPlay.performClick();
         }
 
@@ -313,6 +308,9 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
 
     @Override
     public void onBufferingUpdate(int percent) {
+//        Log.e(TAG, "onBufferingUpdate: "+percent );
+//        Log.e(TAG, "onBufferingUpdate: "+mSeekBar.getMax()*(percent/100));
+//        mSeekBar.setSecondaryProgress(mSeekBar.getMax()*(percent/100));
 
     }
 

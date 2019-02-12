@@ -55,7 +55,7 @@
         android:layout_height="wrap_content" />
     <View
         android:layout_marginLeft="10dp"
-        android:background="@color/colorEEEEEE"
+        android:background="@color/colorDEDEDE"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/tv_num"
         android:layout_width="match_parent"

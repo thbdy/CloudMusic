@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_comment_type"
+        android:padding="10dp"
+        android:text="精彩评论"
+        android:textColor="@color/color333333"
+        android:background="#f2f2f2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
     <com.from206.cloudmusic.view.CircleImageView
         android:src="@mipmap/ic_launcher"
         android:layout_margin="10dp"
@@ -27,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        android:paddingEnd="10dp"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="5dp"
         android:textSize="14sp"
@@ -37,34 +53,45 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <LinearLayout
-        android:gravity="center_vertical"
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_reply_num"
+            android:layout_alignLeft="@+id/tv_user_comment"
+            android:layout_below="@+id/tv_user_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3条回复 >"
+            android:textColor="@color/color507DAE"
+            android:textSize="12sp" />
+
+
+
+    <ImageView
+        android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="12sp"
-            android:textColor="@color/colorBBBBBB"
-            android:layout_marginRight="5dp"
-            android:text="1100"
-            android:id="@+id/tv_comment_like_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:src="@drawable/at4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <View
-        android:background="@color/colorEEEEEE"
+        android:id="@+id/iv_like"
+        android:src="@drawable/xv"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+    <TextView
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/tv_user_comment"
+        android:layout_toLeftOf="@+id/iv_like"
+        android:textSize="12sp"
+        android:textColor="@color/colorBBBBBB"
+        android:layout_marginRight="5dp"
+        android:text="1100"
+        android:id="@+id/tv_comment_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="@color/colorDEDEDE"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_reply_num"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="match_parent"
         android:layout_height="1px"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

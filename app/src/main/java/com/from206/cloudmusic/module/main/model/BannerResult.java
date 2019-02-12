@@ -65,7 +65,7 @@ public class BannerResult {
         private int targetType;
         private String titleColor;
         private String typeTitle;
-        private Object url;
+        private String url;
         private boolean exclusive;
         private Object monitorImpress;
         private Object monitorClick;
@@ -131,11 +131,11 @@ public class BannerResult {
             this.typeTitle = typeTitle;
         }
 
-        public Object getUrl() {
+        public String getUrl() {
             return url;
         }
 
-        public void setUrl(Object url) {
+        public void setUrl(String url) {
             this.url = url;
         }
 

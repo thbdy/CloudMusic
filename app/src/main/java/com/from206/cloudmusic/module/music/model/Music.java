@@ -28,9 +28,16 @@ public class Music implements Serializable {
      */
     private String picUrl;
 
-
-
-
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", path='" + path + '\'' +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                '}';
+    }
 
     public String getPicUrl() {
         return picUrl;

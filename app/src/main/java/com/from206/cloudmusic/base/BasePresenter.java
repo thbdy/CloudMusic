@@ -18,6 +18,9 @@ public class BasePresenter<T extends BaseView> {
     protected T mView;
     private Callback callback;
 
+
+
+
     public void attachView(LifeSubscription mLifeSubscription) {
         this.mReferenceView = new WeakReference<>((T) mLifeSubscription);
         mView = mReferenceView.get();
@@ -38,5 +41,6 @@ public class BasePresenter<T extends BaseView> {
             callback.detachView();
         }
     }
+
 
 }

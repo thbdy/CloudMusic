@@ -17,7 +17,14 @@ import com.from206.cloudmusic.AppCache;
 import com.from206.cloudmusic.module.music.model.Music;
 import com.from206.cloudmusic.service.enums.Actions;
 import com.from206.cloudmusic.service.enums.PlayModeEnum;
+import com.from206.cloudmusic.service.event.GetDurationEvent;
+import com.from206.cloudmusic.service.event.OnChangeEvent;
+import com.from206.cloudmusic.service.event.OnPublishEvent;
+import com.from206.cloudmusic.service.event.PlayerStartEvent;
+import com.from206.cloudmusic.service.event.PlayerStopEvent;
 import com.from206.cloudmusic.utils.Preferences;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Random;
@@ -135,6 +142,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             mPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             if (mListener != null) {
                 mListener.onChange(music);
+                EventBus.getDefault().post(new OnChangeEvent(music));
             }
             AppCache.addMusicList(music);//添加到播放列表里
 //            Notifier.showPlay(music);
@@ -153,6 +161,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 if(mListener != null){
                     mDuration = mp.getDuration();
                     mListener.onGetDuration(mp.getDuration());
+                    EventBus.getDefault().post(new GetDurationEvent(mp.getDuration()));
                 }
             }
         }
@@ -193,6 +202,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
             if (mListener != null) {
                 mListener.onPlayerStart();
+                EventBus.getDefault().post(new PlayerStartEvent());
+
             }
         }
     }
@@ -210,6 +221,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
         if (mListener != null) {
             mListener.onPlayerPause();
+            EventBus.getDefault().post(new PlayerStopEvent());
         }
     }
 
@@ -280,6 +292,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 //            mMediaSessionManager.updatePlaybackState();
             if (mListener != null) {
                 mListener.onPublish(msec);
+                EventBus.getDefault().post(new OnPublishEvent(msec));
             }
         }
     }
@@ -350,6 +363,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         public void run() {
             if (isPlaying() && mListener != null) {
                 mListener.onPublish(mPlayer.getCurrentPosition());
+                EventBus.getDefault().post(new OnPublishEvent(mPlayer.getCurrentPosition()));
+
             }
             mHandler.postDelayed(this, TIME_UPDATE);
         }

@@ -16,6 +16,7 @@ import com.from206.cloudmusic.adapter.MyPlayListAdapter;
 import com.from206.cloudmusic.base.LoadingBaseActivity;
 import com.from206.cloudmusic.http.injector.component.DaggerNetServiceComponent;
 import com.from206.cloudmusic.module.login.model.LoginResult;
+import com.from206.cloudmusic.module.music.model.SongSheet;
 import com.from206.cloudmusic.module.music.view.SongSheetActivity;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
@@ -166,8 +167,14 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         UserPlayListResult.PlaylistBean bean = playlistBeanList.get(position);
+        SongSheet songSheet = new SongSheet();
+        songSheet.setName(bean.getName());
+        songSheet.setCreatedName(bean.getCreator().getNickname());
+        songSheet.setCreatedIcon(bean.getCreator().getAvatarUrl());
+        songSheet.setPicUrl(bean.getCoverImgUrl());
+        songSheet.setId(bean.getId());
         Intent intent = new Intent(mContext,SongSheetActivity.class);
-        intent.putExtra("bean",bean);
+        intent.putExtra("songsheet",songSheet);
         startActivity(intent);
     }
 }

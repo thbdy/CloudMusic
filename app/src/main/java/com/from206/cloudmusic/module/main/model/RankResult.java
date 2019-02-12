@@ -1103,7 +1103,7 @@ public class RankResult {
                 private int dfsId;
                 private int bitrate;
                 private int playTime;
-                private int volumeDelta;
+                private float volumeDelta;
 
                 public String getName() {
                     return name;
@@ -1169,11 +1169,11 @@ public class RankResult {
                     this.playTime = playTime;
                 }
 
-                public int getVolumeDelta() {
+                public float getVolumeDelta() {
                     return volumeDelta;
                 }
 
-                public void setVolumeDelta(int volumeDelta) {
+                public void setVolumeDelta(float volumeDelta) {
                     this.volumeDelta = volumeDelta;
                 }
             }
@@ -1199,7 +1199,7 @@ public class RankResult {
                 private int dfsId;
                 private int bitrate;
                 private int playTime;
-                private int volumeDelta;
+                private float volumeDelta;
 
                 public String getName() {
                     return name;
@@ -1265,11 +1265,11 @@ public class RankResult {
                     this.playTime = playTime;
                 }
 
-                public int getVolumeDelta() {
+                public float getVolumeDelta() {
                     return volumeDelta;
                 }
 
-                public void setVolumeDelta(int volumeDelta) {
+                public void setVolumeDelta(float volumeDelta) {
                     this.volumeDelta = volumeDelta;
                 }
             }
@@ -1295,7 +1295,7 @@ public class RankResult {
                 private int dfsId;
                 private int bitrate;
                 private int playTime;
-                private int volumeDelta;
+                private float volumeDelta;
 
                 public String getName() {
                     return name;
@@ -1361,11 +1361,11 @@ public class RankResult {
                     this.playTime = playTime;
                 }
 
-                public int getVolumeDelta() {
+                public float getVolumeDelta() {
                     return volumeDelta;
                 }
 
-                public void setVolumeDelta(int volumeDelta) {
+                public void setVolumeDelta(float volumeDelta) {
                     this.volumeDelta = volumeDelta;
                 }
             }
@@ -1391,7 +1391,7 @@ public class RankResult {
                 private int dfsId;
                 private int bitrate;
                 private int playTime;
-                private int volumeDelta;
+                private float volumeDelta;
 
                 public String getName() {
                     return name;
@@ -1457,11 +1457,11 @@ public class RankResult {
                     this.playTime = playTime;
                 }
 
-                public int getVolumeDelta() {
+                public float getVolumeDelta() {
                     return volumeDelta;
                 }
 
-                public void setVolumeDelta(int volumeDelta) {
+                public void setVolumeDelta(float volumeDelta) {
                     this.volumeDelta = volumeDelta;
                 }
             }

@@ -2,6 +2,7 @@ package com.from206.cloudmusic.module.main.view;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.from206.cloudmusic.R;
 import com.from206.cloudmusic.adapter.RankAdapter;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 排行榜
@@ -52,7 +54,14 @@ public class RankActivity extends LoadingBaseActivity<RankPresenterImpl> impleme
     public void setState(int state, String msg) {
 
     }
-
+    @OnClick({R.id.iv_back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+        }
+    }
     /**
      * 请求排行榜数据回调
      * @param result
@@ -61,7 +70,6 @@ public class RankActivity extends LoadingBaseActivity<RankPresenterImpl> impleme
     public void loadRankInfo(RankResult result){
         if(result.getCode() == 200){
             if(rankAdapter == null){
-
                 rankAdapter = new RankAdapter(R.layout.item_rank,rankList);
                 rvRank.setAdapter(rankAdapter);
             }

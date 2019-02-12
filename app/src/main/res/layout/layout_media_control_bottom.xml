@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#faffffff"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <RelativeLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <com.from206.cloudmusic.view.roundimage.RoundedImageView
+            app:riv_corner_radius="3dp"
+            android:id="@+id/iv_cover"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:textSize="14sp"
+            android:textColor="@color/color333333"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/iv_cover"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_author"
+            android:textColor="@color/color666666"
+            android:layout_marginBottom="5dp"
+            android:textSize="12sp"
+            android:layout_toRightOf="@+id/iv_cover"
+            android:layout_alignParentBottom="true"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

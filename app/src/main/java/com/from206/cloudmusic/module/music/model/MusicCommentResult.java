@@ -397,7 +397,7 @@ public class MusicCommentResult  {
         private long time;
         private Object expressionUrl;
         private String content;
-        private java.util.List<?> beReplied;
+        private List<BeReplied> beReplied;
 
         public UserBean getUser() {
             return user;
@@ -511,12 +511,191 @@ public class MusicCommentResult  {
             this.content = content;
         }
 
-        public List<?> getBeReplied() {
+        public List<BeReplied> getBeReplied() {
             return beReplied;
         }
 
-        public void setBeReplied(List<?> beReplied) {
+        public void setBeReplied(List<BeReplied> beReplied) {
             this.beReplied = beReplied;
+        }
+
+        public static class BeReplied{
+
+            /**
+             * user : {"locationInfo":null,"authStatus":0,"avatarUrl":"https://p4.music.126.net/lsoUUkAhE50xoC4wfH-fzg==/109951163850119248.jpg","experts":null,"vipRights":null,"expertTags":null,"userId":1479766357,"nickname":"吃胖我喜欢","userType":0,"remarkName":null,"vipType":0}
+             * beRepliedCommentId : 1210620378
+             * content : 这首歌想表达的应该也是这样。有你别无所求了，去好好珍惜你爱的人
+             还记得三年前那倒数五天天天有新歌听
+             G.E.M. 对上一只专辑已是2015年了，7月10日是她出道的10周年，
+             公布今年8月开始，将会每隔2个月推出一张新EP，合共3张专辑
+             听说今次EP主题 是 从前, 现在及未来
+             难道因为是小6，所以六点发预告
+             e
+             * status : 0
+             * expressionUrl : null
+             */
+
+            private UserBean user;
+            private int beRepliedCommentId;
+            private String content;
+            private int status;
+            private Object expressionUrl;
+
+            public UserBean getUser() {
+                return user;
+            }
+
+            public void setUser(UserBean user) {
+                this.user = user;
+            }
+
+            public int getBeRepliedCommentId() {
+                return beRepliedCommentId;
+            }
+
+            public void setBeRepliedCommentId(int beRepliedCommentId) {
+                this.beRepliedCommentId = beRepliedCommentId;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public Object getExpressionUrl() {
+                return expressionUrl;
+            }
+
+            public void setExpressionUrl(Object expressionUrl) {
+                this.expressionUrl = expressionUrl;
+            }
+
+            public static class UserBean {
+                /**
+                 * locationInfo : null
+                 * authStatus : 0
+                 * avatarUrl : https://p4.music.126.net/lsoUUkAhE50xoC4wfH-fzg==/109951163850119248.jpg
+                 * experts : null
+                 * vipRights : null
+                 * expertTags : null
+                 * userId : 1479766357
+                 * nickname : 吃胖我喜欢
+                 * userType : 0
+                 * remarkName : null
+                 * vipType : 0
+                 */
+
+                private Object locationInfo;
+                private int authStatus;
+                private String avatarUrl;
+                private Object experts;
+                private Object vipRights;
+                private Object expertTags;
+                private int userId;
+                private String nickname;
+                private int userType;
+                private Object remarkName;
+                private int vipType;
+
+                public Object getLocationInfo() {
+                    return locationInfo;
+                }
+
+                public void setLocationInfo(Object locationInfo) {
+                    this.locationInfo = locationInfo;
+                }
+
+                public int getAuthStatus() {
+                    return authStatus;
+                }
+
+                public void setAuthStatus(int authStatus) {
+                    this.authStatus = authStatus;
+                }
+
+                public String getAvatarUrl() {
+                    return avatarUrl;
+                }
+
+                public void setAvatarUrl(String avatarUrl) {
+                    this.avatarUrl = avatarUrl;
+                }
+
+                public Object getExperts() {
+                    return experts;
+                }
+
+                public void setExperts(Object experts) {
+                    this.experts = experts;
+                }
+
+                public Object getVipRights() {
+                    return vipRights;
+                }
+
+                public void setVipRights(Object vipRights) {
+                    this.vipRights = vipRights;
+                }
+
+                public Object getExpertTags() {
+                    return expertTags;
+                }
+
+                public void setExpertTags(Object expertTags) {
+                    this.expertTags = expertTags;
+                }
+
+                public int getUserId() {
+                    return userId;
+                }
+
+                public void setUserId(int userId) {
+                    this.userId = userId;
+                }
+
+                public String getNickname() {
+                    return nickname;
+                }
+
+                public void setNickname(String nickname) {
+                    this.nickname = nickname;
+                }
+
+                public int getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(int userType) {
+                    this.userType = userType;
+                }
+
+                public Object getRemarkName() {
+                    return remarkName;
+                }
+
+                public void setRemarkName(Object remarkName) {
+                    this.remarkName = remarkName;
+                }
+
+                public int getVipType() {
+                    return vipType;
+                }
+
+                public void setVipType(int vipType) {
+                    this.vipType = vipType;
+                }
+            }
         }
 
         public static class UserBean {

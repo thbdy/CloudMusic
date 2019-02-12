@@ -3,9 +3,13 @@ package com.from206.cloudmusic.http;
 
 import com.from206.cloudmusic.module.login.model.LoginResult;
 import com.from206.cloudmusic.module.main.model.BannerResult;
+import com.from206.cloudmusic.module.main.model.DailyRecommendResult;
 import com.from206.cloudmusic.module.main.model.PersonalFmResult;
 import com.from206.cloudmusic.module.main.model.RankResult;
+import com.from206.cloudmusic.module.main.model.DJProgramResult;
+import com.from206.cloudmusic.module.main.model.RecommendResourceResult;
 import com.from206.cloudmusic.module.main.model.RefreshLoginResult;
+import com.from206.cloudmusic.module.music.model.CommentLikeResult;
 import com.from206.cloudmusic.module.music.model.MusicCommentResult;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 import com.from206.cloudmusic.module.music.model.MusicVideoResult;
@@ -72,7 +76,29 @@ public interface NetService {
 
     //获取音乐评论
     @GET("comment/music")
-    Observable<MusicCommentResult> fetchMusicComment(@Query("id")String id);
+    Observable<MusicCommentResult> fetchMusicComment(@Query("id")String id,@Query("limit")String limit,@Query("offset") String offset);
 
+
+    //给评论点赞
+    //id 资源 id, 如歌曲 id,mv id
+    //cid 评论 id
+    //t : 是否点赞 ,1 为点赞 ,0 为取消点赞
+    //tpye: 0: 歌曲  1: mv  2: 歌单  3: 专辑  4: 电台  5: 视频
+    @GET("comment/like")
+    Observable<CommentLikeResult> fetchCommentLike(@Query("id")String id,@Query("cid")String cid
+            ,@Query("t")String t,@Query("type")String type);
+
+
+    //获取每日推荐歌曲
+    @GET("recommend/songs")
+    Observable<DailyRecommendResult> fetchDailyRecommend();
+
+    //获取每日推荐歌曲
+    @GET("recommend/resource")
+    Observable<RecommendResourceResult> fetchRecommendResource();
+
+    //获取推荐电台
+    @GET("personalized/djprogram")
+    Observable<DJProgramResult> fetchDJProgram();
 
 }

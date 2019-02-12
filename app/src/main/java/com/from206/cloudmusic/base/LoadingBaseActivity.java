@@ -3,8 +3,6 @@ package com.from206.cloudmusic.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.from206.cloudmusic.http.Stateful;
@@ -14,8 +12,8 @@ import com.from206.cloudmusic.utils.HttpCode;
 import javax.inject.Inject;
 
 public abstract class LoadingBaseActivity<T extends BasePresenter> extends BaseActivity implements Stateful {
-    private String TAG  ;
-    protected Handler mHandler = new Handler(Looper.getMainLooper());
+    private String TAG;
+
     @Inject
     protected T mPresenter;
 

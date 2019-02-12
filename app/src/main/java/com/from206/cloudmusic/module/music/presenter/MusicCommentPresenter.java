@@ -1,6 +1,7 @@
 package com.from206.cloudmusic.module.music.presenter;
 
 import com.from206.cloudmusic.base.BaseView;
+import com.from206.cloudmusic.module.music.model.CommentLikeResult;
 import com.from206.cloudmusic.module.music.model.MusicCommentResult;
 
 /**
@@ -9,9 +10,11 @@ import com.from206.cloudmusic.module.music.model.MusicCommentResult;
  */
 public interface MusicCommentPresenter {
     interface Presenter {
-        void fetchMusicComment(String id);
+        void fetchMusicComment(String id,String limit,String offset);
+        void fetchCommentLike(String id,String cid,String t,String type);
     }
     interface View extends BaseView {
         void loadMusicComment(MusicCommentResult result);
+        void loadCommentLike(CommentLikeResult result);
     }
 }

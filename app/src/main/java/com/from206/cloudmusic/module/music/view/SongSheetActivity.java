@@ -17,9 +17,10 @@ import com.from206.cloudmusic.adapter.SheetMusicListAdapter;
 import com.from206.cloudmusic.base.LoadingBaseActivity;
 import com.from206.cloudmusic.http.injector.component.DaggerNetServiceComponent;
 import com.from206.cloudmusic.module.music.model.PlayListDetailResult;
+import com.from206.cloudmusic.module.music.model.SongSheet;
 import com.from206.cloudmusic.module.music.presenter.SongSheetPresenter;
 import com.from206.cloudmusic.module.music.presenter.SongSheetPresenterImpl;
-import com.from206.cloudmusic.module.user.model.UserPlayListResult;
+import com.from206.cloudmusic.utils.TypeChangeUtil;
 import com.from206.cloudmusic.view.CircleImageView;
 
 import java.util.ArrayList;
@@ -57,7 +58,8 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
     /**
      * 歌单资料
      */
-    private UserPlayListResult.PlaylistBean bean;
+//    private UserPlayListResult.PlaylistBean bean;
+    private SongSheet songSheet;
     /**
      * 适配器
      */
@@ -66,7 +68,7 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
 
     @Override
     public void fetchData() {
-        mPresenter.fetchPlayListDetail(String.valueOf(bean.getId()));
+        mPresenter.fetchPlayListDetail(String.valueOf(songSheet.getId()));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
 
     @Override
     protected void initViews() {
-        bean = (UserPlayListResult.PlaylistBean) getIntent().getSerializableExtra("bean");
+        songSheet = (SongSheet) getIntent().getSerializableExtra("songsheet");
         rvMusicList.setLayoutManager(new LinearLayoutManager(mContext));
         initUI();
 
@@ -91,12 +93,12 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
      * 初始化一些界面
      */
     private void initUI() {
-        tvCreatedName.setText(bean.getCreator().getNickname());
-        tvSheetName.setText(bean.getName());
-        Glide.with(mContext).load(bean.getCreator().getAvatarUrl()).into(ivCreatedIcon);
-        Glide.with(mContext).load(bean.getCoverImgUrl()).into(ivCover);
+        tvCreatedName.setText(songSheet.getCreatedName());
+        tvSheetName.setText(songSheet.getName());
+        Glide.with(mContext).load(songSheet.getCreatedIcon()).into(ivCreatedIcon);
+        Glide.with(mContext).load(songSheet.getPicUrl()).into(ivCover);
         //虚化背景图片
-        Glide.with(this).load(bean.getCoverImgUrl())
+        Glide.with(this).load(songSheet.getPicUrl())
                 .apply(bitmapTransform(new BlurTransformation(99,2)))
                 .into(ivBlurBg);
     }
@@ -143,7 +145,7 @@ public class SongSheetActivity extends LoadingBaseActivity<SongSheetPresenterImp
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(mContext,MusicActivity.class);
-        intent.putExtra("bean",playlistBeanList.get(position));
+        intent.putExtra("music",TypeChangeUtil.chanToMusicType(playlistBeanList.get(position)));
         startActivity(intent);
     }
 
