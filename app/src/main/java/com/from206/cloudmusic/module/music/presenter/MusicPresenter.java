@@ -1,6 +1,7 @@
 package com.from206.cloudmusic.module.music.presenter;
 
 import com.from206.cloudmusic.base.BaseView;
+import com.from206.cloudmusic.module.music.model.LyricResult;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 
 /**
@@ -10,8 +11,10 @@ import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 public interface MusicPresenter {
     interface Presenter {
         void fetchMusicUrl(String id);
+        void fetchLyric(String id);
     }
     interface View extends BaseView {
         void loadMusicUrl(MusicUrlResult result);
+        void loadLyric(LyricResult result);
     }
 }

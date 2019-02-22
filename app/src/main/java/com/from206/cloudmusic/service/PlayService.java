@@ -240,7 +240,6 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             ToastUtils.showShort("没有下一首了");
             return;
         }
-
         PlayModeEnum mode = PlayModeEnum.valueOf(Preferences.getPlayMode());
         switch (mode) {
             case SHUFFLE:

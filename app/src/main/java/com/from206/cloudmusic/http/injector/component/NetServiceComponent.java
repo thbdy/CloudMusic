@@ -8,10 +8,13 @@ import com.from206.cloudmusic.module.main.view.MainActivity;
 import com.from206.cloudmusic.module.main.view.PersonalFmActivity;
 import com.from206.cloudmusic.module.main.view.RankActivity;
 import com.from206.cloudmusic.module.main.view.RecommendFragment;
+import com.from206.cloudmusic.module.main.view.SearchActivity;
+import com.from206.cloudmusic.module.main.view.SearchTypeFragment;
 import com.from206.cloudmusic.module.music.view.MusicActivity;
 import com.from206.cloudmusic.module.music.view.MusicCommentActivity;
 import com.from206.cloudmusic.module.music.view.MusicVideoActivity;
 import com.from206.cloudmusic.module.music.view.SongSheetActivity;
+import com.from206.cloudmusic.module.user.view.ListeningMusicRankActivity;
 import com.from206.cloudmusic.module.user.view.PersonInfoActivity;
 
 import javax.inject.Singleton;
@@ -32,4 +35,7 @@ public interface NetServiceComponent {
     void injectMusicVideoActivity(MusicVideoActivity activity);
     void injectMusicCommentActivity(MusicCommentActivity activity);
     void injectDailyRecommendActivity(DailyRecommendActivity activity);
+    void injectListeningMusicRankActivity(ListeningMusicRankActivity activity);
+    void injectSearchActivity(SearchActivity activity);
+    void injectSearchTypeFragment(SearchTypeFragment activity);
 }

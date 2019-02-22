@@ -3,6 +3,7 @@ package com.from206.cloudmusic.module.music.presenter;
 import com.from206.cloudmusic.base.BasePresenter;
 import com.from206.cloudmusic.http.NetService;
 import com.from206.cloudmusic.http.utils.Callback;
+import com.from206.cloudmusic.module.music.model.LyricResult;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 
 import javax.inject.Inject;
@@ -25,6 +26,16 @@ public class MusicPresenterImpl extends BasePresenter<MusicPresenter.View> imple
             @Override
             public void onResponse(MusicUrlResult data) {
                 mView.loadMusicUrl(data);
+            }
+        });
+    }
+
+    @Override
+    public void fetchLyric(String id) {
+        invoke(service.fetchLyric(id),new Callback<LyricResult>(){
+            @Override
+            public void onResponse(LyricResult data) {
+                mView.loadLyric(data);
             }
         });
     }

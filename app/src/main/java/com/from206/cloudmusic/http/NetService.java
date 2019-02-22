@@ -3,19 +3,24 @@ package com.from206.cloudmusic.http;
 
 import com.from206.cloudmusic.module.login.model.LoginResult;
 import com.from206.cloudmusic.module.main.model.BannerResult;
+import com.from206.cloudmusic.module.main.model.DJProgramResult;
 import com.from206.cloudmusic.module.main.model.DailyRecommendResult;
 import com.from206.cloudmusic.module.main.model.PersonalFmResult;
 import com.from206.cloudmusic.module.main.model.RankResult;
-import com.from206.cloudmusic.module.main.model.DJProgramResult;
 import com.from206.cloudmusic.module.main.model.RecommendResourceResult;
 import com.from206.cloudmusic.module.main.model.RefreshLoginResult;
+import com.from206.cloudmusic.module.main.model.SearchHotResult;
+import com.from206.cloudmusic.module.main.model.SearchResult;
+import com.from206.cloudmusic.module.main.model.SearchSuggestResult;
 import com.from206.cloudmusic.module.music.model.CommentLikeResult;
+import com.from206.cloudmusic.module.music.model.LyricResult;
 import com.from206.cloudmusic.module.music.model.MusicCommentResult;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 import com.from206.cloudmusic.module.music.model.MusicVideoResult;
 import com.from206.cloudmusic.module.music.model.PlayListDetailResult;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
+import com.from206.cloudmusic.module.user.model.UserRecordResult;
 import com.from206.cloudmusic.module.user.model.UserSubCountResult;
 
 import retrofit2.http.GET;
@@ -100,5 +105,27 @@ public interface NetService {
     //获取推荐电台
     @GET("personalized/djprogram")
     Observable<DJProgramResult> fetchDJProgram();
+
+    //获取推荐电台
+    @GET("lyric")
+    Observable<LyricResult> fetchLyric(@Query("id") String id);
+
+    //获取听歌排行
+    @GET("user/record")
+    Observable<UserRecordResult> fetchUserRecord(@Query("uid") String uid, @Query("type")String type);
+
+    //搜索
+    @GET("search")
+    Observable<SearchResult> fetchSearch(@Query("keywords") String keywords, @Query("limit")String limit,
+                                         @Query("offset")String offset,@Query("type")String type);
+
+    //热搜
+    @GET("search/hot")
+    Observable<SearchHotResult> fetchSearchHot();
+
+    //搜索建议
+    @GET("search/suggest")
+    Observable<SearchSuggestResult> fetchSearchSuggest(@Query("keywords")String keywords,@Query("type")String type);
+
 
 }

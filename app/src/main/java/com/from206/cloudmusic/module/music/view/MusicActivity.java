@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.widget.AppCompatSeekBar;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.from206.cloudmusic.AppCache;
 import com.from206.cloudmusic.R;
 import com.from206.cloudmusic.base.LoadingBaseActivity;
 import com.from206.cloudmusic.http.injector.component.DaggerNetServiceComponent;
+import com.from206.cloudmusic.module.music.model.LyricResult;
 import com.from206.cloudmusic.module.music.model.Music;
 import com.from206.cloudmusic.module.music.model.MusicUrlResult;
 import com.from206.cloudmusic.module.music.presenter.MusicPresenter;
@@ -29,8 +33,11 @@ import com.from206.cloudmusic.module.music.presenter.MusicPresenterImpl;
 import com.from206.cloudmusic.service.OnPlayerEventListener;
 import com.from206.cloudmusic.service.PlayService;
 import com.from206.cloudmusic.utils.HttpCode;
+import com.from206.cloudmusic.utils.Preferences;
 import com.from206.cloudmusic.utils.TimeUtil;
 import com.from206.cloudmusic.view.CommonHeaderView;
+import com.from206.cloudmusic.view.lric.LrcView;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,7 +51,7 @@ import static com.from206.cloudmusic.AppCache.getPlayService;
  * Created by 75232 on 2019/1/28
  * Email：752323877@qq.com
  */
-public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> implements MusicPresenter.View, OnPlayerEventListener, SeekBar.OnSeekBarChangeListener {
+public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> implements MusicPresenter.View, OnPlayerEventListener, SeekBar.OnSeekBarChangeListener, LrcView.OnPlayClickListener, LrcView.OnClickListener {
 //    private PlayListDetailResult.PlaylistBean.TracksBean musicBean;
     @BindView(R.id.head_view)
     CommonHeaderView headerView;
@@ -60,6 +67,16 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
     AppCompatSeekBar mSeekBar;
     @BindView(R.id.iv_bg)
     ImageView ivBg;
+    @BindView(R.id.rl_music_tab_1)
+    RelativeLayout rlMusicTab1;
+    @BindView(R.id.rl_music_tab_2)
+    RelativeLayout rlMusicTab2;
+    @BindView(R.id.iv_mast)
+    ImageView ivMast;
+    @BindView(R.id.iv_play_mode)
+    ImageView ivPlayMode;
+    @BindView(R.id.lrc_view)
+    LrcView lrcView;
     private ServiceConnection mPlayServiceConnection;
     private Music music = new Music();
     private boolean isDraggingProgress;
@@ -68,6 +85,14 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      * 圆盘旋转动画
      */
     private ObjectAnimator discAnimation;
+    /**
+     * 唱针旋转动画
+     */
+    private ObjectAnimator mastRightAnimation;
+    /**
+     * 唱针旋转动画
+     */
+    private ObjectAnimator mastLeftAnimation;
     private static final String TAG = "MusicActivity";
     /**
      * 正在播放的音乐ID
@@ -141,10 +166,18 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
 
     @Override
     protected void initViews() {
+
         music = (Music) getIntent().getSerializableExtra("music");
         initAni();
+        mastRightAnimation.start();
+        mastRightAnimation.setDuration(500);
         initUI();
+        changePlayMode(false);
         initListener();
+        lrcView.setOnPlayClickListener(this);
+        lrcView.setLrcViewClickListener(this);
+
+
     }
     /**
      * 初始化动画
@@ -153,8 +186,20 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         discAnimation = ObjectAnimator.ofFloat(ivCover, "rotation", 0f, 360f);
         discAnimation.setDuration(20000);//设置转一圈需要的时间
         discAnimation.setInterpolator(new LinearInterpolator() );//设置插速器
-        discAnimation.setRepeatCount(-1);//设置旋转次数
-        discAnimation.setRepeatMode(ValueAnimator.RESTART);//设置旋转重复模
+        discAnimation.setRepeatCount(-1);//设置重复次数
+        discAnimation.setRepeatMode(ValueAnimator.RESTART);//设置旋转重复模式
+
+
+        mastRightAnimation = ObjectAnimator.ofFloat(ivMast,"rotation",0f,-18f);
+        mastRightAnimation.setDuration(1);//设置转一圈需要的时间
+        ivMast.setPivotX(DensityUtil.dp2px(16));//设置指定旋转中心点X坐标
+        ivMast.setPivotY(DensityUtil.dp2px(16));//设置指定旋转中心点Y坐标
+        mastRightAnimation.setRepeatCount(Animation.ABSOLUTE);//设置重复次数
+
+
+        mastLeftAnimation = ObjectAnimator.ofFloat(ivMast,"rotation",-18f,0f);
+        mastLeftAnimation.setDuration(500);//设置转一圈需要的时间
+        mastLeftAnimation.setRepeatCount(Animation.ABSOLUTE);//设置重复次数
     }
     /**
      * 初始化一些监听事件
@@ -211,9 +256,38 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         }
 
     }
-    @OnClick({R.id.iv_back,R.id.tv_play,R.id.tv_next,R.id.tv_previous,R.id.iv_music_comment})
+
+    /**
+     * 获取歌词回调
+     * @param result
+     */
+    @Override
+    public void loadLyric(LyricResult result) {
+        if(result.getCode() == 200 && null != result.getLrc() && !TextUtils.isEmpty(result.getLrc().getLyric())){
+            ToastUtils.showShort("获取到歌词");
+            lrcView.loadLrc(result.getLrc().getLyric());
+//            lrcView.loadTlLrc(result.getTlyric().getLyric());
+        }else {
+            ToastUtils.showShort("未获取到歌词");
+        }
+
+    }
+
+    @OnClick({R.id.iv_back,R.id.tv_play,R.id.tv_next,R.id.tv_previous,R.id.iv_music_comment,
+            R.id.rl_music_tab_1,R.id.rl_music_tab_2,R.id.iv_play_mode})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_play_mode:
+                changePlayMode(true);
+                break;
+            case R.id.rl_music_tab_1:
+                rlMusicTab1.setVisibility(View.GONE);
+                rlMusicTab2.setVisibility(View.VISIBLE);
+                break;
+            case R.id.rl_music_tab_2:
+                rlMusicTab1.setVisibility(View.VISIBLE);
+                rlMusicTab2.setVisibility(View.GONE);
+                break;
             case R.id.iv_back:
                 finish();
                 break;
@@ -240,8 +314,42 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         }
     }
 
+    /**
+     * 修改播放模式
+     */
+    private void changePlayMode(boolean flag) {
+        int mode = Preferences.getPlayMode();
+        if(flag){
+            mode = mode < 2?mode+1:0;
+            Preferences.savePlayMode(mode);
+        }
+        switch (mode){
+            case 0:
+                ivPlayMode.setBackground(getDrawable(R.drawable.selector_music_loop_all));
+                if(flag){
+                    ToastUtils.showShort("列表循环");
+                }
+                break;
+            case 1:
+                ivPlayMode.setBackground(getDrawable(R.drawable.selector_music_loop_random));
+                if(flag){
+                    ToastUtils.showShort("随机播放");
+                }
+                break;
+            case 2:
+                ivPlayMode.setBackground(getDrawable(R.drawable.selector_music_loop_single));
+                if(flag){
+                    ToastUtils.showShort("单曲循环");
+                }
+                break;
+        }
+
+    }
+
     @Override
     public void onChange(Music music) {
+        //获取歌词
+        mPresenter.fetchLyric(String.valueOf(music.getId()));
         onChangeImpl(music);
 
     }
@@ -260,7 +368,9 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         if (getPlayService().isPlaying() || getPlayService().isPreparing()) {
             mLastProgress = (int) getPlayService().getDuration();
             tvPlay.setActivated(true);
-            startAni();
+            if(getPlayService().isPlaying()){
+                startAni();
+            }
             initUI(music);
         } else {
             mLastProgress = 0;
@@ -272,6 +382,7 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
      * 启动动画
      */
     private void startAni(){
+        mastLeftAnimation.start();
         if(discAnimation.isRunning()&& !discAnimation.isPaused()){
             return;
         }
@@ -289,6 +400,7 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         tvPlay.setActivated(true);
         startAni();
 
+
     }
 
     @Override
@@ -296,11 +408,13 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
         Log.e(TAG, "onPlayerPause: " );
         tvPlay.setActivated(false);
         discAnimation.pause();
+        mastRightAnimation.start();
     }
 
     @Override
     public void onPublish(int progress) {
         if (!isDraggingProgress) {
+            lrcView.updateTime(progress);
             mSeekBar.setProgress(progress);
 
         }
@@ -358,6 +472,20 @@ public class MusicActivity extends LoadingBaseActivity<MusicPresenterImpl> imple
                 seekBar.setProgress(0);
             }
         }
+    }
+
+    @Override
+    public boolean onPlayClick(long time) {
+        Log.e(TAG, "onPlayClick: "+time );
+        getPlayService().seekTo((int) time);
+
+        return false;
+    }
+
+    @Override
+    public void onClick() {
+        rlMusicTab1.setVisibility(View.VISIBLE);
+        rlMusicTab2.setVisibility(View.GONE);
     }
 
     private  class PlayServiceConnection implements ServiceConnection {

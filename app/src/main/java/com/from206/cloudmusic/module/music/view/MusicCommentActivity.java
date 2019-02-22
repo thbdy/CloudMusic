@@ -21,7 +21,6 @@ import com.from206.cloudmusic.module.music.model.Music;
 import com.from206.cloudmusic.module.music.model.MusicCommentResult;
 import com.from206.cloudmusic.module.music.presenter.MusicCommentPresenter;
 import com.from206.cloudmusic.module.music.presenter.MusicCommentPresenterImpl;
-import com.from206.cloudmusic.utils.AnimationTool;
 import com.from206.cloudmusic.utils.HttpCode;
 import com.from206.cloudmusic.view.CommonHeaderView;
 import com.google.gson.Gson;
@@ -42,11 +41,11 @@ import butterknife.OnClick;
  * Created by 75232 on 2019/2/1
  * Email：752323877@qq.com
  */
-public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresenterImpl> implements MusicCommentPresenter.View, BaseQuickAdapter.OnItemChildClickListener, OnLoadMoreListener {
+public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresenterImpl> implements
+        MusicCommentPresenter.View, BaseQuickAdapter.OnItemChildClickListener, OnLoadMoreListener {
     private Music music;
     @BindView(R.id.head_view)
     CommonHeaderView headerView;
-
     @BindView(R.id.rv_comment)
     RecyclerView rvComment;
     @BindView(R.id.smart_refresh)
@@ -60,13 +59,11 @@ public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresen
     @Override
     public void fetchData() {
         mPresenter.fetchMusicComment(String.valueOf(music.getId()), String.valueOf(pageSize), String.valueOf(pageNum * pageSize));
-
     }
 
     @Override
     protected void initInject() {
         DaggerNetServiceComponent.builder().build().injectMusicCommentActivity(this);
-
     }
 
     @Override
@@ -80,8 +77,6 @@ public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresen
         rvComment.setLayoutManager(new LinearLayoutManager(mContext));
         smartRefreshLayout.setEnableRefresh(false);
         smartRefreshLayout.setOnLoadMoreListener(this);
-
-
     }
 
     /**
@@ -91,7 +86,6 @@ public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresen
         ImageView ivCover = view.findViewById(R.id.iv_cover);
         TextView tvMusicName = view.findViewById(R.id.tv_music_name);
         TextView tvAuthor = view.findViewById(R.id.tv_author);
-
         Glide.with(mContext).load(music.getPicUrl()).into(ivCover);
         tvMusicName.setText(music.getName());
         tvAuthor.setText(music.getAuthor());
@@ -149,7 +143,7 @@ public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresen
             } else {
                 ivLike.setImageResource(R.drawable.xw);
             }
-            AnimationTool.scaleView(ivLike);
+//            AnimationTool.scaleView(ivLike);
             musicCommentAdapter.getData().get(position).setLiked(!isLiked);
             int count = musicCommentAdapter.getData().get(position).getLikedCount()+( isLiked?-1:1);
             musicCommentAdapter.getData().get(position).setLikedCount(count);
@@ -171,7 +165,6 @@ public class MusicCommentActivity extends LoadingBaseActivity<MusicCommentPresen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 

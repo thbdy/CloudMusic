@@ -24,5 +24,11 @@
 
     <color name="color507DAE">#507dae</color>
 
+    <color name="lrc_normal_text_color">#9E9E9E</color>
+    <color name="lrc_current_text_color">#ffffff</color>
+    <color name="lrc_timeline_text_color">#df4339</color>
+    <color name="lrc_timeline_color">#809E9E9E</color>
+    <color name="lrc_time_text_color">#809E9E9E</color>
+
 
 </resources>

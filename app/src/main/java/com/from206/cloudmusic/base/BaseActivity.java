@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ import com.from206.cloudmusic.service.event.OnChangeEvent;
 import com.from206.cloudmusic.service.event.OnPublishEvent;
 import com.from206.cloudmusic.service.event.PlayerStartEvent;
 import com.from206.cloudmusic.service.event.PlayerStopEvent;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +47,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.from206.cloudmusic.AppCache.getPlayService;
 
-public  abstract class BaseActivity extends AppCompatActivity implements LifeSubscription, View.OnClickListener {
+public  abstract class BaseActivity extends AppCompatActivity implements LifeSubscription {
     private static final String TAG = "BaseActivity";
     protected Handler mHandler = new Handler(Looper.getMainLooper());
     protected Context mContext;
@@ -62,6 +65,7 @@ public  abstract class BaseActivity extends AppCompatActivity implements LifeSub
     private RelativeLayout rlLayout;
     private ImageView ivCover;
     private TextView tvAuthor;
+    private LinearLayout mRootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,10 @@ public  abstract class BaseActivity extends AppCompatActivity implements LifeSub
         initViews();
         ViewGroup mDecorView = (ViewGroup) getWindow().getDecorView();
         mContentContainer = (FrameLayout) ((ViewGroup) mDecorView.getChildAt(0)).getChildAt(1);
+        Log.e(TAG, "onCreate: "+ mContentContainer.getClass().getSimpleName());
+
+        mRootView = (LinearLayout) mContentContainer.getChildAt(0);//FitWindowsLinearLayout
+
         mFloatView =  LayoutInflater.from(getBaseContext()).inflate(R.layout.layout_media_control_bottom, null);
         bindView(mFloatView);
         EventBus.getDefault().register(this);
@@ -102,14 +110,15 @@ public  abstract class BaseActivity extends AppCompatActivity implements LifeSub
         layoutParams.gravity = Gravity.BOTTOM;
         mFloatView.setLayoutParams(layoutParams);
         mContentContainer.addView(mFloatView);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(this.getClass().getSimpleName().equals("MusicActivity")){
+        if(this.getClass().getSimpleName().equals("MusicActivity")
+                || this.getClass().getSimpleName().equals("MusicCommentActivity")){
             mFloatView.setVisibility(View.GONE);
+            mRootView.setPadding(0,0,0,0);
         }else {
             checkService();
         }
@@ -131,8 +140,10 @@ public  abstract class BaseActivity extends AppCompatActivity implements LifeSub
             if(!getPlayService().isIdle() && getPlayService().getPlayingMusic() != null){
                 EventBus.getDefault().post(new OnChangeEvent(getPlayService().getPlayingMusic()));
                 mFloatView.setVisibility(View.VISIBLE);
+                mRootView.setPadding(0,0,0,DensityUtil.dp2px(50));
             }else {
                 mFloatView.setVisibility(View.GONE);
+                mRootView.setPadding(0,0,0,0);
             }
         }
     }

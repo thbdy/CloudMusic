@@ -20,6 +20,7 @@ import com.from206.cloudmusic.module.music.model.SongSheet;
 import com.from206.cloudmusic.module.music.view.SongSheetActivity;
 import com.from206.cloudmusic.module.user.model.PersonInfoResult;
 import com.from206.cloudmusic.module.user.model.UserPlayListResult;
+import com.from206.cloudmusic.module.user.model.UserRecordResult;
 import com.from206.cloudmusic.module.user.model.UserSubCountResult;
 import com.from206.cloudmusic.module.user.presenter.PersonInfoPresenter;
 import com.from206.cloudmusic.module.user.presenter.PersonInfoPresenterImpl;
@@ -38,8 +39,8 @@ import butterknife.OnClick;
  * Created by 75232 on 2019/1/23
  * Email：752323877@qq.com
  */
-public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterImpl> implements PersonInfoPresenter.View, BaseQuickAdapter.OnItemClickListener {
-
+public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterImpl> implements
+        PersonInfoPresenter.View, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.iv_person_info_bg)
     ImageView ivPersonInfoBg;
     @BindView(R.id.iv_head)
@@ -61,7 +62,7 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
     public void fetchData() {
         //获取用户详情
 //        mPresenter.fetchPersonInfo(PersonInfoUtil.getPersonInfo().getProfile().getUserId() + "");
-        //获取用户信息 , 歌单，收藏，mv, dj 数量
+//        获取用户信息 , 歌单，收藏，mv, dj 数量
 //        mPresenter.fetchUserSubCount();
         //获取用户歌单
         mPresenter.fetchUserPlayList(PersonInfoUtil.getPersonInfo().getProfile().getUserId() + "");
@@ -127,6 +128,11 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
 
     }
 
+    @Override
+    public void loadUserRecord(UserRecordResult result) {
+
+    }
+
 //    /**
 //     * 更新个人页面资料
 //     */
@@ -151,15 +157,23 @@ public class PersonInfoActivity extends LoadingBaseActivity<PersonInfoPresenterI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.tv_follows,R.id.tv_fans,R.id.rl_my_music_rank})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rl_my_music_rank:
+                startActivity(new Intent(mContext,ListeningMusicRankActivity.class));
+                break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_follows:
+                startActivity(new Intent(mContext,FriendsActivity.class));
+                break;
+            case R.id.tv_fans:
+                startActivity(new Intent(mContext,FriendsActivity.class));
                 break;
         }
     }

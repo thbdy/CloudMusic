@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/we"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_search"
+            android:textCursorDrawable="@drawable/shape_search_et_cursor"
+            android:paddingStart="10dp"
+            android:background="@drawable/shape_search_et_bg"
+            android:textColorHint="#80ffffff"
+            android:textColor="@color/colorEEEEEE"
+            android:hint="Blame You 很好听哦"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--搜索初始页面-->
+        <FrameLayout
+            android:visibility="gone"
+            android:id="@+id/layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/b3m"
+                    android:textStyle="bold"
+                    android:textColor="@color/color333333"
+                    android:textSize="16sp"
+                    android:text="按歌手搜索"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:background="@color/colorDDDDDD"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/color333333"
+                    android:text="热门搜索"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.from206.cloudmusic.view.FlowLayout
+                    android:id="@+id/flow_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.from206.cloudmusic.view.FlowLayout>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/color333333"
+                    android:text="历史记录"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!--搜索结果页面-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:id="@+id/layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.flyco.tablayout.SlidingTabLayout
+                android:background="@color/colorPrimary"
+                app:tl_textSelectColor="@color/white"
+                app:tl_indicator_width_equal_title="true"
+                app:tl_indicator_bounce_enable="true"
+                app:tl_indicator_corner_radius="1dp"
+                app:tl_indicator_anim_enable="true"
+                app:tl_textBold="SELECT"
+                app:tl_textUnselectColor="@color/colorDDDDDD"
+                android:id="@+id/sliding_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </com.flyco.tablayout.SlidingTabLayout>
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
+
+
+        <!--搜索提示-->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:elevation="3dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical"
+            android:id="@+id/ll_search_tip"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:textColor="@color/color507DAE"
+                android:paddingLeft="10dp"
+                android:id="@+id/tv_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+            <View
+                android:background="@color/colorDDDDDD"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

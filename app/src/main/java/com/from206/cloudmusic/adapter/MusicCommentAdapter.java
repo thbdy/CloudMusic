@@ -35,10 +35,10 @@ public class MusicCommentAdapter extends BaseQuickAdapter<MusicCommentResult.Com
     protected void convert(BaseViewHolder helper, MusicCommentResult.CommentsBean item) {
         TextView tvCommentType = helper.getView(R.id.tv_comment_type);
         TextView tvReplyNum = helper.getView(R.id.tv_reply_num);
-        if(helper.getLayoutPosition() == mHotCommentNum+1){
+        if(helper.getLayoutPosition() == mHotCommentNum + 1){
             tvCommentType.setVisibility(View.VISIBLE);
             tvCommentType.setText("最新评论");
-        } else if(helper.getLayoutPosition() == 0){
+        } else if(helper.getLayoutPosition() == 1){
             tvCommentType.setVisibility(View.VISIBLE);
             tvCommentType.setText("精彩评论");
         }else {

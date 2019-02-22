@@ -84,11 +84,14 @@ public class MainActivity extends LoadingBaseActivity<MainPresenterImpl> impleme
 
     }
 
-    @OnClick({R.id.iv_head})
+    @OnClick({R.id.iv_head,R.id.iv_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_head:
                 startActivity(new Intent(mContext,PersonInfoActivity.class));
+                break;
+            case R.id.iv_right:
+                startActivity(new Intent(mContext,SearchActivity.class));
                 break;
         }
     }

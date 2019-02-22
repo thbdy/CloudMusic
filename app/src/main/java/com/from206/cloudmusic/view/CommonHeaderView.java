@@ -23,6 +23,7 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
     TextView tvRight;
     TextView tvLeftText;
     ImageView ivBack;
+    ImageView ivRight;
     private Context mContext;
 
     public CommonHeaderView(Context context, AttributeSet attrs) {
@@ -32,10 +33,12 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
         View view = inflater.inflate(R.layout.include_toolbar_layout, this, true);
         tvTitle = view.findViewById(R.id.tv_title);
         ivBack = view.findViewById(R.id.iv_back);
+        ivRight = view.findViewById(R.id.iv_right);
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.CommonHeaderView);
 //
         String titleText = typedArray.getString(R.styleable.CommonHeaderView_head_title);
         boolean showBack = typedArray.getBoolean(R.styleable.CommonHeaderView_head_show_back,true);
+        boolean showRight = typedArray.getBoolean(R.styleable.CommonHeaderView_head_show_right,false);
 //        boolean showTextRight = typedArray.getBoolean(R.styleable.CommonHeaderView_head_text_right,false);
 //        boolean showTextLeft = typedArray.getBoolean(R.styleable.CommonHeaderView_head_left_text,false);
 
@@ -46,6 +49,7 @@ public class CommonHeaderView extends LinearLayout implements View.OnClickListen
             tvTitle.setText(titleText);
             tvTitle.setVisibility(View.VISIBLE);
         }
+        ivRight.setVisibility(showRight?VISIBLE:INVISIBLE);
         typedArray.recycle();
     }
 

@@ -58,7 +58,6 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
     private RecommendResourceAdapter recommendResourceAdapter;
     private DJProgramAdapter djProgramAdapter;
 
-
     @Override
     protected void fetchData() {
         //请求轮播图数据
@@ -82,6 +81,7 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         banner.setOnBannerClickListener(this);
+
 
     }
 
@@ -141,7 +141,6 @@ public class RecommendFragment extends LoadingBaseFragment<RecommendPresenterImp
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;

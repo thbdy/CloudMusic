@@ -52,4 +52,9 @@ public class PersonInfoPresenterImpl extends BasePresenter<PersonInfoPresenter.V
             }
         });
     }
+
+    @Override
+    public void fetchUserRecord(String uid, String type) {
+
+    }
 }

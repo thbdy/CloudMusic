@@ -22,6 +22,7 @@ public class SheetMusicListAdapter extends BaseQuickAdapter<PlayListDetailResult
 
     @Override
     protected void convert(BaseViewHolder helper, PlayListDetailResult.PlaylistBean.TracksBean item) {
+
         helper.setText(R.id.tv_num,String.valueOf(helper.getLayoutPosition()+1));
         helper.setText(R.id.tv_music_name,item.getName());
         helper.setText(R.id.tv_author,item.getAl().getName());
@@ -37,6 +38,13 @@ public class SheetMusicListAdapter extends BaseQuickAdapter<PlayListDetailResult
             ivMv.setVisibility(View.VISIBLE);
         }
         helper.addOnClickListener(R.id.iv_mv);
+//        if(item.getCopyright() == 0 && item.getCrbt() != null){ //没有版权
+//            helper.setTextColor(R.id.tv_music_name,mContext.getResources().getColor(R.color.colorPrimary));
+//            helper.setTextColor(R.id.tv_author,mContext.getResources().getColor(R.color.colorPrimary));
+//        }else {
+//            helper.setTextColor(R.id.tv_music_name,mContext.getResources().getColor(R.color.color333333));
+//            helper.setTextColor(R.id.tv_author,mContext.getResources().getColor(R.color.color666666));
+//        }
 
     }
 }

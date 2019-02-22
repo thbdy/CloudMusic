@@ -31,12 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".module.main.view.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 登录主页面 -->
         <activity android:name=".module.login.view.LoginMainActivity"/>
@@ -65,6 +60,23 @@
         <activity android:name=".module.main.view.DailyRecommendActivity" />
         <!--浏览器页面-->
         <activity android:name=".module.common.view.WebViewActivity"/>
+
+        <!--我的好友-->
+        <activity android:name=".module.user.view.FriendsActivity"/>
+
+        <!--听歌排行-->
+        <activity android:name=".module.user.view.ListeningMusicRankActivity"/>
+
+        <!--搜索页面-->
+        <activity android:name=".module.main.view.SearchActivity"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
         <!-- 音乐播放服务 -->
